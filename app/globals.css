@@ -55,9 +55,11 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground font-inter;
   }
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-playfair;
   }
@@ -80,16 +82,16 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(32 15% 92%);
+  background: hsl(32deg 15% 92%);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(43 74% 49%);
+  background: hsl(43deg 74% 49%);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(43 74% 40%);
+  background: hsl(43deg 74% 40%);
 }
 
 /* Parallax effect */
