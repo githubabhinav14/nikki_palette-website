@@ -1,0 +1,844 @@
+'use client'
+
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Star, ChevronDown, Plus, Minus, Sparkles, Palette, Brush, Mail, Phone, Instagram, MessageCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+
+function App() {
+  return (
+    <div className="min-h-screen bg-cream-50">
+      <HeroSection />
+      <GallerySection />
+      <AboutSection />
+      <ServicesSection />
+      <TestimonialsSection />
+      <FAQSection />
+      <ContactSection />
+    </div>
+  );
+}
+
+// Hero Section
+function HeroSection() {
+  return (
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0 z-0">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ 
+            backgroundImage: 'url(https://images.unsplash.com/photo-1634986666676-ec8fd927c23d)',
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-cream-900/80 via-gold-900/70 to-cream-900/80" />
+      </div>
+
+      {/* Content */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="relative z-10 text-center px-4 max-w-5xl mx-auto"
+      >
+        <motion.div
+          initial={{ scale: 0.9 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.8 }}
+          className="inline-block mb-6"
+        >
+          <Sparkles className="w-12 h-12 text-gold-400 mx-auto" />
+        </motion.div>
+
+        <motion.h1 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.8 }}
+          className="text-5xl md:text-7xl font-playfair font-bold text-cream-50 mb-6"
+        >
+          Alex Artiste
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
+          className="text-xl md:text-2xl text-gold-200 font-medium mb-4"
+        >
+          Artist | Portraits | Paintings | T-Shirt Art | Sketches
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.8 }}
+          className="text-lg text-cream-200 mb-10 max-w-2xl mx-auto"
+        >
+          Passionate artist bringing visions to life through diverse mediums, inspired by nature and human emotion.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.8 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+        >
+          <a href="#gallery">
+            <Button size="lg" className="bg-gold-600 hover:bg-gold-700 text-white px-8 py-6 text-lg rounded-full shadow-xl hover:shadow-2xl transition-all">
+              <Palette className="mr-2 h-5 w-5" />
+              View My Work
+            </Button>
+          </a>
+          <a href="#contact">
+            <Button size="lg" variant="outline" className="border-2 border-cream-50 text-cream-50 hover:bg-cream-50 hover:text-gold-700 px-8 py-6 text-lg rounded-full shadow-xl transition-all">
+              <Brush className="mr-2 h-5 w-5" />
+              Get a Custom Artwork
+            </Button>
+          </a>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+          className="mt-16"
+        >
+          <a href="#gallery" className="inline-block animate-bounce">
+            <ChevronDown className="w-10 h-10 text-gold-400" />
+          </a>
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+}
+
+// Gallery Section
+function GallerySection() {
+  const [artworks, setArtworks] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedArtwork, setSelectedArtwork] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const categories = [
+    { id: 'all', label: 'All Works' },
+    { id: 'portraits', label: 'Portraits' },
+    { id: 'tshirt', label: 'T-Shirt Art' },
+    { id: 'paintings', label: 'Paintings' },
+    { id: 'sketches', label: 'Sketches' },
+    { id: 'digital', label: 'Digital Art' },
+  ];
+
+  useEffect(() => {
+    fetchArtworks();
+  }, [selectedCategory]);
+
+  const fetchArtworks = async () => {
+    setLoading(true);
+    try {
+      const url = selectedCategory === 'all' 
+        ? '/api/artworks' 
+        : `/api/artworks?category=${selectedCategory}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      setArtworks(data.data || []);
+    } catch (error) {
+      console.error('Error fetching artworks:', error);
+    }
+    setLoading(false);
+  };
+
+  return (
+    <section id="gallery" className="py-20 bg-cream-100">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-playfair font-bold text-gold-700 mb-4">
+            Portfolio Gallery
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Explore my diverse collection of artworks across various mediums and styles
+          </p>
+        </motion.div>
+
+        {/* Category Filters */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="flex flex-wrap justify-center gap-3 mb-12"
+        >
+          {categories.map((category) => (
+            <button
+              key={category.id}
+              onClick={() => setSelectedCategory(category.id)}
+              className={`px-6 py-2 rounded-full font-medium transition-all ${
+                selectedCategory === category.id
+                  ? 'bg-gold-600 text-white shadow-lg'
+                  : 'bg-white text-foreground hover:bg-cream-200'
+              }`}
+            >
+              {category.label}
+            </button>
+          ))}
+        </motion.div>
+
+        {/* Gallery Grid */}
+        {loading ? (
+          <div className="text-center py-20">
+            <div className="inline-block w-12 h-12 border-4 border-gold-600 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          >
+            {artworks.map((artwork, index) => (
+              <motion.div
+                key={artwork.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition-all cursor-pointer bg-white"
+                onClick={() => setSelectedArtwork(artwork)}
+              >
+                <div className="aspect-square overflow-hidden">
+                  <img
+                    src={artwork.imageUrl}
+                    alt={artwork.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                  <div className="p-4 w-full">
+                    <h3 className="text-white font-playfair font-semibold text-lg mb-1">
+                      {artwork.title}
+                    </h3>
+                    {artwork.description && (
+                      <p className="text-cream-200 text-sm">{artwork.description}</p>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+
+        {/* Artwork Modal */}
+        <AnimatePresence>
+          {selectedArtwork && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+              onClick={() => setSelectedArtwork(null)}
+            >
+              <motion.div
+                initial={{ scale: 0.9 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0.9 }}
+                className="relative max-w-5xl w-full max-h-[90vh] bg-white rounded-lg overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  onClick={() => setSelectedArtwork(null)}
+                  className="absolute top-4 right-4 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all"
+                >
+                  <X size={24} />
+                </button>
+                <div className="flex flex-col md:flex-row">
+                  <div className="flex-1 bg-black flex items-center justify-center p-8">
+                    <img
+                      src={selectedArtwork.imageUrl}
+                      alt={selectedArtwork.title}
+                      className="max-w-full max-h-[70vh] object-contain"
+                    />
+                  </div>
+                  <div className="w-full md:w-80 p-6">
+                    <h3 className="text-2xl font-playfair font-bold text-gold-700 mb-2">
+                      {selectedArtwork.title}
+                    </h3>
+                    <p className="text-muted-foreground mb-4 capitalize">
+                      {selectedArtwork.category}
+                    </p>
+                    {selectedArtwork.description && (
+                      <p className="text-foreground mb-6">{selectedArtwork.description}</p>
+                    )}
+                    <a href="#contact">
+                      <Button className="w-full bg-gold-600 hover:bg-gold-700">
+                        Commission Similar Artwork
+                      </Button>
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </section>
+  );
+}
+
+// About Section
+function AboutSection() {
+  return (
+    <section id="about" className="py-20 bg-white">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <img
+              src="https://images.unsplash.com/photo-1692859532235-c93fa73bd5d0"
+              alt="Artist workspace"
+              className="rounded-2xl shadow-2xl"
+            />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-5xl font-playfair font-bold text-gold-700 mb-6">
+              About the Artist
+            </h2>
+            <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+              Hello! I'm <span className="text-gold-600 font-semibold">Alex Artiste</span>, a passionate artist based in New York City. 
+              My journey in art began with a simple pencil and paper, and has evolved into a lifelong commitment to bringing visions to life 
+              through diverse mediums.
+            </p>
+            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+              Inspired by nature and human emotion, I specialize in creating custom portraits, paintings, t-shirt designs, sketches, 
+              and digital art. Each piece I create tells a story and captures a moment in time.
+            </p>
+
+            <h3 className="text-2xl font-playfair font-semibold text-gold-600 mb-4">Skills & Mediums</h3>
+            <div className="grid grid-cols-2 gap-4 mb-8">
+              {['Oil Painting', 'Digital Illustration', 'Pencil Drawing', 'Watercolor', 'Portrait Art', 'T-Shirt Design'].map((skill) => (
+                <div key={skill} className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-gold-600 rounded-full"></div>
+                  <span className="text-foreground font-medium">{skill}</span>
+                </div>
+              ))}
+            </div>
+
+            <h3 className="text-2xl font-playfair font-semibold text-gold-600 mb-4">Tools I Use</h3>
+            <div className="flex flex-wrap gap-3 mb-8">
+              {['Procreate', 'Adobe Photoshop', 'Traditional Canvas', 'Wacom Tablet', 'Oil & Acrylic'].map((tool) => (
+                <span key={tool} className="px-4 py-2 bg-cream-100 text-foreground rounded-full text-sm font-medium">
+                  {tool}
+                </span>
+              ))}
+            </div>
+
+            <a href="#contact">
+              <Button size="lg" className="bg-gold-600 hover:bg-gold-700">
+                Let's Work Together
+              </Button>
+            </a>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Services Section
+function ServicesSection() {
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  const fetchServices = async () => {
+    try {
+      const response = await fetch('/api/services');
+      const data = await response.json();
+      setServices(data.data || []);
+    } catch (error) {
+      console.error('Error fetching services:', error);
+    }
+  };
+
+  return (
+    <section id="services" className="py-20 bg-cream-100">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-playfair font-bold text-gold-700 mb-4">
+            Commission Services
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Bring your vision to life with custom artwork tailored to your needs
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {services.map((service, index) => (
+            <motion.div
+              key={service.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+            >
+              <Card className="h-full hover:shadow-xl transition-shadow group overflow-hidden">
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={service.imageUrl}
+                    alt={service.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute top-4 right-4 bg-gold-600 text-white px-4 py-2 rounded-full font-semibold shadow-lg">
+                    {service.price}
+                  </div>
+                </div>
+                <CardHeader>
+                  <CardTitle className="text-2xl font-playfair text-gold-700">
+                    {service.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-base mb-6">
+                    {service.description}
+                  </CardDescription>
+                  <a href="#contact">
+                    <Button className="w-full bg-gold-600 hover:bg-gold-700">
+                      Contact to Order
+                    </Button>
+                  </a>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Testimonials Section
+function TestimonialsSection() {
+  const [testimonials, setTestimonials] = useState([]);
+
+  useEffect(() => {
+    fetchTestimonials();
+  }, []);
+
+  const fetchTestimonials = async () => {
+    try {
+      const response = await fetch('/api/testimonials');
+      const data = await response.json();
+      setTestimonials(data.data || []);
+    } catch (error) {
+      console.error('Error fetching testimonials:', error);
+    }
+  };
+
+  return (
+    <section id="testimonials" className="py-20 bg-white">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-playfair font-bold text-gold-700 mb-4">
+            Client Testimonials
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            What my clients say about working with me
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {testimonials.map((testimonial, index) => (
+            <motion.div
+              key={testimonial.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+            >
+              <Card className="h-full hover:shadow-lg transition-shadow">
+                <CardContent className="pt-6">
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 fill-gold-500 text-gold-500" />
+                    ))}
+                  </div>
+                  <p className="text-foreground mb-6 italic leading-relaxed">
+                    "{testimonial.message}"
+                  </p>
+                  <div className="font-semibold text-gold-700">
+                    — {testimonial.name}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// FAQ Section
+function FAQSection() {
+  const faqs = [
+    {
+      question: 'How long does a commission take?',
+      answer: 'Typical commissions take 2-4 weeks depending on the complexity and medium. Rush orders may be available for an additional fee.',
+    },
+    {
+      question: 'What information do you need to start a commission?',
+      answer: 'I need reference photos or detailed descriptions of what you want, preferred size/dimensions, medium choice, and any specific style preferences you have.',
+    },
+    {
+      question: 'Do you offer revisions?',
+      answer: 'Yes! I provide up to 2 rounds of revisions for all commissions to ensure you\'re completely satisfied with the final piece.',
+    },
+    {
+      question: 'Can I purchase prints of existing work?',
+      answer: 'Absolutely! Contact me for print pricing and available sizes. Original pieces may also be available for purchase.',
+    },
+    {
+      question: 'Do you ship internationally?',
+      answer: 'Yes, I ship worldwide! Shipping costs vary based on location and artwork size. Digital files are available for instant download.',
+    },
+    {
+      question: 'What payment methods do you accept?',
+      answer: 'I accept PayPal, Venmo, bank transfers, and major credit cards. A 50% deposit is required to begin work on commissions.',
+    },
+  ];
+
+  return (
+    <section id="faq" className="py-20 bg-cream-100">
+      <div className="container mx-auto px-4 max-w-3xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-playfair font-bold text-gold-700 mb-4">
+            Frequently Asked Questions
+          </h2>
+          <p className="text-lg text-muted-foreground">
+            Everything you need to know about commissioning artwork
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
+          <Accordion type="single" collapsible className="bg-white rounded-lg shadow-md">
+            {faqs.map((faq, index) => (
+              <AccordionItem key={index} value={`item-${index}`} className="border-b border-cream-200 last:border-b-0">
+                <AccordionTrigger className="px-6 py-4 hover:bg-cream-50 text-left font-semibold text-foreground">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-4 text-muted-foreground">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// Contact Section
+function ContactSection() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
+  });
+  const [status, setStatus] = useState({ type: 'idle', message: '' });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus({ type: 'loading', message: '' });
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setStatus({ type: 'success', message: 'Message sent successfully! I\'ll get back to you soon.' });
+        setFormData({ name: '', email: '', phone: '', message: '' });
+      } else {
+        setStatus({ type: 'error', message: data.error || 'Failed to send message. Please try again.' });
+      }
+    } catch (error) {
+      setStatus({ type: 'error', message: 'An error occurred. Please try again.' });
+    }
+  };
+
+  return (
+    <section id="contact" className="py-20 bg-white">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-playfair font-bold text-gold-700 mb-4">
+            Get in Touch
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Ready to commission a custom artwork? Let's discuss your project!
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+          {/* Contact Form */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <Card className="shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-2xl font-playfair text-gold-700">Send a Message</CardTitle>
+                <CardDescription>Fill out the form and I'll respond within 24 hours</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium mb-2">
+                      Name *
+                    </label>
+                    <Input
+                      id="name"
+                      name="name"
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Your full name"
+                      className="w-full"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium mb-2">
+                      Email *
+                    </label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="your@email.com"
+                      className="w-full"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium mb-2">
+                      Phone (Optional)
+                    </label>
+                    <Input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="+1 (234) 567-8900"
+                      className="w-full"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium mb-2">
+                      Message *
+                    </label>
+                    <Textarea
+                      id="message"
+                      name="message"
+                      required
+                      value={formData.message}
+                      onChange={handleChange}
+                      placeholder="Tell me about your project ideas, preferred style, timeline, etc."
+                      rows={6}
+                      className="w-full"
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    disabled={status.type === 'loading'}
+                    className="w-full bg-gold-600 hover:bg-gold-700 py-6 text-lg"
+                  >
+                    {status.type === 'loading' ? 'Sending...' : 'Send Message'}
+                  </Button>
+
+                  {status.message && (
+                    <div
+                      className={`mt-4 p-4 rounded-lg ${
+                        status.type === 'success'
+                          ? 'bg-green-50 text-green-800 border border-green-200'
+                          : 'bg-red-50 text-red-800 border border-red-200'
+                      }`}
+                    >
+                      {status.message}
+                    </div>
+                  )}
+                </form>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Contact Info */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="space-y-6"
+          >
+            <Card className="shadow-lg hover:shadow-xl transition-shadow">
+              <CardContent className="pt-6">
+                <div className="flex items-start gap-4">
+                  <div className="bg-gold-100 p-3 rounded-full">
+                    <Mail className="w-6 h-6 text-gold-700" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Email</h3>
+                    <a href="mailto:artist.contact@example.com" className="text-gold-600 hover:text-gold-700">
+                      artist.contact@example.com
+                    </a>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-lg hover:shadow-xl transition-shadow">
+              <CardContent className="pt-6">
+                <div className="flex items-start gap-4">
+                  <div className="bg-gold-100 p-3 rounded-full">
+                    <Phone className="w-6 h-6 text-gold-700" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Phone</h3>
+                    <a href="tel:+1234567890" className="text-gold-600 hover:text-gold-700">
+                      +123-456-7890
+                    </a>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-lg hover:shadow-xl transition-shadow">
+              <CardContent className="pt-6">
+                <div className="flex items-start gap-4">
+                  <div className="bg-gold-100 p-3 rounded-full">
+                    <Instagram className="w-6 h-6 text-gold-700" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Instagram</h3>
+                    <a 
+                      href="https://instagram.com/MyArtGallery" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-gold-600 hover:text-gold-700"
+                    >
+                      @MyArtGallery
+                    </a>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-lg hover:shadow-xl transition-shadow">
+              <CardContent className="pt-6">
+                <div className="flex items-start gap-4">
+                  <div className="bg-gold-100 p-3 rounded-full">
+                    <MessageCircle className="w-6 h-6 text-gold-700" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">WhatsApp</h3>
+                    <a 
+                      href="https://wa.me/1234567890" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-gold-600 hover:text-gold-700"
+                    >
+                      Chat on WhatsApp
+                    </a>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-gold-50 to-cream-100 shadow-lg">
+              <CardContent className="pt-6">
+                <h3 className="font-playfair font-semibold text-xl text-gold-700 mb-3">
+                  📍 Location
+                </h3>
+                <p className="text-foreground">
+                  Based in <span className="font-semibold">New York City</span>
+                </p>
+                <p className="text-sm text-muted-foreground mt-2">
+                  Available for local meetings and worldwide shipping
+                </p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default App;

@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 32 20% 97%;
+    --foreground: 30 10% 10%;
+    --card: 32 20% 98%;
+    --card-foreground: 30 10% 10%;
+    --popover: 32 20% 98%;
+    --popover-foreground: 30 10% 10%;
+    --primary: 43 74% 49%;
+    --primary-foreground: 32 20% 98%;
+    --secondary: 32 15% 92%;
+    --secondary-foreground: 30 10% 10%;
+    --muted: 32 15% 92%;
+    --muted-foreground: 30 8% 45%;
+    --accent: 43 74% 49%;
+    --accent-foreground: 32 20% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 32 20% 98%;
+    --border: 32 15% 88%;
+    --input: 32 15% 88%;
+    --ring: 43 74% 49%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-inter;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-playfair;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(32 15% 92%);
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(43 74% 49%);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(43 74% 40%);
+}
+
+/* Parallax effect */
+.parallax {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
