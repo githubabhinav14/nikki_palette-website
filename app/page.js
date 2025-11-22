@@ -8,14 +8,23 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { BlogSection } from '@/components/blog-section';
+import { CommissionForm } from '@/components/commission-form';
+import { ShareButtons } from '@/components/social-share';
+import { NewsletterSubscription } from '@/components/newsletter';
+import { TestimonialForm } from '@/components/testimonial-form';
+import { AnalyticsDashboard } from '@/components/analytics-dashboard';
 
 function App() {
   return (
-    <div className="min-h-screen bg-cream-50">
+    <div className="min-h-screen bg-background">
       <HeroSection />
       <GallerySection />
       <AboutSection />
       <ServicesSection />
+      <BlogSection />
+      <NewsletterSection />
+      <AnalyticsSection />
       <TestimonialsSection />
       <FAQSection />
       <ContactSection />
@@ -26,7 +35,7 @@ function App() {
 // Hero Section
 function HeroSection() {
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-muted/50 to-background">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <div 
@@ -35,7 +44,7 @@ function HeroSection() {
             backgroundImage: 'url(https://images.unsplash.com/photo-1634986666676-ec8fd927c23d)',
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-cream-900/80 via-gold-900/70 to-cream-900/80" />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/70 to-black/80 dark:from-black/90 dark:via-black/80 dark:to-black/90" />
       </div>
 
       {/* Content */}
@@ -58,7 +67,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-5xl md:text-7xl font-playfair font-bold text-cream-50 mb-6"
+          className="text-5xl md:text-7xl font-playfair font-bold text-white mb-6"
         >
           Alex Artiste
         </motion.h1>
@@ -76,7 +85,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.8 }}
-          className="text-lg text-cream-200 mb-10 max-w-2xl mx-auto"
+          className="text-lg text-gray-200 mb-10 max-w-2xl mx-auto"
         >
           Passionate artist bringing visions to life through diverse mediums, inspired by nature and human emotion.
         </motion.p>
@@ -94,7 +103,7 @@ function HeroSection() {
             </Button>
           </a>
           <a href="#contact">
-            <Button size="lg" variant="outline" className="border-2 border-cream-50 text-cream-50 hover:bg-cream-50 hover:text-gold-700 px-8 py-6 text-lg rounded-full shadow-xl transition-all">
+            <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-gold-700 px-8 py-6 text-lg rounded-full shadow-xl transition-all">
               <Brush className="mr-2 h-5 w-5" />
               Get a Custom Artwork
             </Button>
@@ -119,9 +128,14 @@ function HeroSection() {
 // Gallery Section
 function GallerySection() {
   const [artworks, setArtworks] = useState([]);
+  const [filteredArtworks, setFilteredArtworks] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedArtwork, setSelectedArtwork] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState('newest');
   const [loading, setLoading] = useState(true);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const categories = [
     { id: 'all', label: 'All Works' },
@@ -136,6 +150,44 @@ function GallerySection() {
     fetchArtworks();
   }, [selectedCategory]);
 
+  useEffect(() => {
+    filterAndSortArtworks();
+  }, [artworks, searchTerm, sortBy]);
+
+  const filterAndSortArtworks = () => {
+    let filtered = [...artworks];
+    
+    // Filter by search term
+    if (searchTerm.trim()) {
+      const searchLower = searchTerm.toLowerCase().trim();
+      filtered = filtered.filter(artwork => 
+        artwork.title.toLowerCase().includes(searchLower) ||
+        (artwork.description && artwork.description.toLowerCase().includes(searchLower)) ||
+        artwork.category.toLowerCase().includes(searchLower)
+      );
+    }
+    
+    // Sort artworks
+    switch (sortBy) {
+      case 'newest':
+        filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        break;
+      case 'oldest':
+        filtered.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+        break;
+      case 'title':
+        filtered.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case 'category':
+        filtered.sort((a, b) => a.category.localeCompare(b.category));
+        break;
+      default:
+        break;
+    }
+    
+    setFilteredArtworks(filtered);
+  };
+
   const fetchArtworks = async () => {
     setLoading(true);
     try {
@@ -145,14 +197,61 @@ function GallerySection() {
       const response = await fetch(url);
       const data = await response.json();
       setArtworks(data.data || []);
+      setFilteredArtworks(data.data || []);
     } catch (error) {
       console.error('Error fetching artworks:', error);
     }
     setLoading(false);
   };
 
+  const handleArtworkSelect = (artwork) => {
+    setSelectedArtwork(artwork);
+    const index = filteredArtworks.findIndex(art => art.id === artwork.id);
+    setCurrentImageIndex(index);
+    setIsZoomed(false);
+  };
+
+  const navigateArtwork = (direction) => {
+    const newIndex = direction === 'next' 
+      ? (currentImageIndex + 1) % filteredArtworks.length
+      : (currentImageIndex - 1 + filteredArtworks.length) % filteredArtworks.length;
+    
+    setCurrentImageIndex(newIndex);
+    setSelectedArtwork(filteredArtworks[newIndex]);
+    setIsZoomed(false);
+  };
+
+  const handleKeyDown = (e) => {
+    if (!selectedArtwork) return;
+    
+    switch (e.key) {
+      case 'Escape':
+        setSelectedArtwork(null);
+        break;
+      case 'ArrowLeft':
+        navigateArtwork('prev');
+        break;
+      case 'ArrowRight':
+        navigateArtwork('next');
+        break;
+      case ' ':
+        e.preventDefault();
+        setIsZoomed(!isZoomed);
+        break;
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    if (selectedArtwork) {
+      document.addEventListener('keydown', handleKeyDown);
+      return () => document.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [selectedArtwork, currentImageIndex, isZoomed]);
+
   return (
-    <section id="gallery" className="py-20 bg-cream-100">
+    <section id="gallery" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -161,7 +260,7 @@ function GallerySection() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-playfair font-bold text-gold-700 mb-4">
+          <h2 className="text-4xl md:text-5xl font-playfair font-bold text-primary mb-4">
             Portfolio Gallery
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -177,14 +276,52 @@ function GallerySection() {
           viewport={{ once: true }}
           className="flex flex-wrap justify-center gap-3 mb-12"
         >
+          {/* Search and Filter Controls */}
+          <div className="w-full max-w-4xl mb-8 space-y-4">
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="relative flex-1">
+                <Input
+                  type="text"
+                  placeholder="Search artworks by title, description, or category..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 pr-4 py-3 w-full"
+                />
+                <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                  <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+              </div>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="px-4 py-3 rounded-lg border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+              >
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="title">Title A-Z</option>
+                <option value="category">Category</option>
+              </select>
+            </div>
+            
+            {/* Results Counter */}
+            <div className="text-center text-muted-foreground">
+              {searchTerm ? (
+                <span>Found {filteredArtworks.length} artwork{filteredArtworks.length !== 1 ? 's' : ''} matching "{searchTerm}"</span>
+              ) : (
+                <span>Showing {filteredArtworks.length} artwork{filteredArtworks.length !== 1 ? 's' : ''}</span>
+              )}
+            </div>
+          </div>
           {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
               className={`px-6 py-2 rounded-full font-medium transition-all ${
                 selectedCategory === category.id
-                  ? 'bg-gold-600 text-white shadow-lg'
-                  : 'bg-white text-foreground hover:bg-cream-200'
+                  ? 'bg-primary text-primary-foreground shadow-lg'
+                  : 'bg-background text-foreground hover:bg-muted'
               }`}
             >
               {category.label}
@@ -197,6 +334,25 @@ function GallerySection() {
           <div className="text-center py-20">
             <div className="inline-block w-12 h-12 border-4 border-gold-600 border-t-transparent rounded-full animate-spin"></div>
           </div>
+        ) : filteredArtworks.length === 0 ? (
+          <div className="text-center py-20">
+            <div className="text-muted-foreground text-lg mb-4">
+              {searchTerm ? (
+                <span>No artworks found matching "{searchTerm}"</span>
+              ) : (
+                <span>No artworks found in this category</span>
+              )}
+            </div>
+            <Button 
+              onClick={() => {
+                setSearchTerm('');
+                setSelectedCategory('all');
+              }}
+              variant="outline"
+            >
+              Clear Filters
+            </Button>
+          </div>
         ) : (
           <motion.div
             initial={{ opacity: 0 }}
@@ -204,14 +360,14 @@ function GallerySection() {
             transition={{ duration: 0.6 }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
           >
-            {artworks.map((artwork, index) => (
+            {filteredArtworks.map((artwork, index) => (
               <motion.div
                 key={artwork.id}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition-all cursor-pointer bg-white"
-                onClick={() => setSelectedArtwork(artwork)}
+                className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition-all cursor-pointer bg-card"
+                onClick={() => handleArtworkSelect(artwork)}
               >
                 <div className="aspect-square overflow-hidden">
                   <img
@@ -243,29 +399,88 @@ function GallerySection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4"
               onClick={() => setSelectedArtwork(null)}
             >
               <motion.div
                 initial={{ scale: 0.9 }}
                 animate={{ scale: 1 }}
                 exit={{ scale: 0.9 }}
-                className="relative max-w-5xl w-full max-h-[90vh] bg-white rounded-lg overflow-hidden"
+                className="relative max-w-6xl w-full max-h-[95vh] bg-white rounded-lg overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
               >
+                {/* Close Button */}
                 <button
                   onClick={() => setSelectedArtwork(null)}
-                  className="absolute top-4 right-4 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all"
+                  className="absolute top-4 right-4 z-20 bg-black/70 hover:bg-black/90 text-white p-2 rounded-full transition-all"
                 >
                   <X size={24} />
                 </button>
-                <div className="flex flex-col md:flex-row">
-                  <div className="flex-1 bg-black flex items-center justify-center p-8">
-                    <img
+
+                {/* Navigation Buttons */}
+                {filteredArtworks.length > 1 && (
+                  <>
+                    <button
+                      onClick={() => navigateArtwork('prev')}
+                      className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/70 hover:bg-black/90 text-white p-3 rounded-full transition-all"
+                    >
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </button>
+                    <button
+                      onClick={() => navigateArtwork('next')}
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/70 hover:bg-black/90 text-white p-3 rounded-full transition-all"
+                    >
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </>
+                )}
+
+                {/* Image Counter */}
+                {filteredArtworks.length > 1 && (
+                  <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-20 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+                    {currentImageIndex + 1} / {filteredArtworks.length}
+                  </div>
+                )}
+
+                <div className="flex flex-col lg:flex-row">
+                  {/* Image Container */}
+                  <div className="flex-1 bg-black flex items-center justify-center p-4 lg:p-8 relative overflow-hidden">
+                    <motion.img
+                      key={selectedArtwork.id}
                       src={selectedArtwork.imageUrl}
                       alt={selectedArtwork.title}
-                      className="max-w-full max-h-[70vh] object-contain"
+                      className={`max-w-full max-h-[60vh] lg:max-h-[80vh] object-contain cursor-zoom-in transition-transform duration-300 ${
+                        isZoomed ? 'scale-150 cursor-zoom-out' : 'hover:scale-105'
+                      }`}
+                      onClick={() => setIsZoomed(!isZoomed)}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: isZoomed ? 1.5 : 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{ duration: 0.3 }}
                     />
+                    
+                    {/* Zoom Controls */}
+                    <div className="absolute bottom-4 right-4 flex gap-2 z-10">
+                      <button
+                        onClick={() => setIsZoomed(!isZoomed)}
+                        className="bg-black/70 hover:bg-black/90 text-white p-2 rounded-full transition-all"
+                        title={isZoomed ? 'Zoom Out' : 'Zoom In'}
+                      >
+                        {isZoomed ? (
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7" />
+                          </svg>
+                        ) : (
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                          </svg>
+                        )}
+                      </button>
+                    </div>
                   </div>
                   <div className="w-full md:w-80 p-6">
                     <h3 className="text-2xl font-playfair font-bold text-gold-700 mb-2">
@@ -277,6 +492,16 @@ function GallerySection() {
                     {selectedArtwork.description && (
                       <p className="text-foreground mb-6">{selectedArtwork.description}</p>
                     )}
+                    <div className="mb-6">
+                      <ShareButtons 
+                        title={selectedArtwork.title}
+                        description={selectedArtwork.description || `Check out this amazing ${selectedArtwork.category} artwork!`}
+                        url={`${typeof window !== 'undefined' ? window.location.origin : ''}/#gallery`}
+                        image={selectedArtwork.imageUrl}
+                        size="sm"
+                        variant="outline"
+                      />
+                    </div>
                     <a href="#contact">
                       <Button className="w-full bg-gold-600 hover:bg-gold-700">
                         Commission Similar Artwork
@@ -288,6 +513,50 @@ function GallerySection() {
             </motion.div>
           )}
         </AnimatePresence>
+      </div>
+    </section>
+  );
+}
+
+// Newsletter Section
+function NewsletterSection() {
+  return (
+    <section className="py-20 bg-muted/30">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-playfair font-bold text-primary mb-4">
+            Stay Connected
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Subscribe to our newsletter and never miss updates on new artworks, blog posts, and exclusive content.
+          </p>
+        </motion.div>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
+          <NewsletterSubscription variant="card" />
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// Analytics Section
+function AnalyticsSection() {
+  return (
+    <section id="analytics" className="py-20 bg-background">
+      <div className="container mx-auto px-4">
+        <AnalyticsDashboard variant="full" />
       </div>
     </section>
   );
@@ -365,6 +634,7 @@ function AboutSection() {
 // Services Section
 function ServicesSection() {
   const [services, setServices] = useState([]);
+  const [showCommissionForm, setShowCommissionForm] = useState(false);
 
   useEffect(() => {
     fetchServices();
@@ -393,9 +663,15 @@ function ServicesSection() {
           <h2 className="text-4xl md:text-5xl font-playfair font-bold text-gold-700 mb-4">
             Commission Services
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
             Bring your vision to life with custom artwork tailored to your needs
           </p>
+          <Button 
+            onClick={() => setShowCommissionForm(true)}
+            className="bg-gold-600 hover:bg-gold-700 text-white px-8 py-3 text-lg"
+          >
+            Request Custom Commission
+          </Button>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -427,16 +703,23 @@ function ServicesSection() {
                   <CardDescription className="text-base mb-6">
                     {service.description}
                   </CardDescription>
-                  <a href="#contact">
-                    <Button className="w-full bg-gold-600 hover:bg-gold-700">
-                      Contact to Order
-                    </Button>
-                  </a>
+                  <Button 
+                    onClick={() => setShowCommissionForm(true)}
+                    className="w-full bg-gold-600 hover:bg-gold-700"
+                  >
+                    Request This Service
+                  </Button>
                 </CardContent>
               </Card>
             </motion.div>
           ))}
         </div>
+        
+        {/* Commission Form Modal */}
+        <CommissionForm 
+          isOpen={showCommissionForm}
+          onClose={() => setShowCommissionForm(false)}
+        />
       </div>
     </section>
   );
@@ -445,6 +728,7 @@ function ServicesSection() {
 // Testimonials Section
 function TestimonialsSection() {
   const [testimonials, setTestimonials] = useState([]);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     fetchTestimonials();
@@ -458,6 +742,12 @@ function TestimonialsSection() {
     } catch (error) {
       console.error('Error fetching testimonials:', error);
     }
+  };
+
+  const handleTestimonialSuccess = () => {
+    setShowForm(false);
+    // Optionally refresh testimonials
+    fetchTestimonials();
   };
 
   return (
@@ -478,6 +768,44 @@ function TestimonialsSection() {
           </p>
         </motion.div>
 
+        {/* Testimonial Submission Form */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="max-w-4xl mx-auto mb-16"
+        >
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-playfair font-semibold text-gold-700 mb-4">
+              Share Your Experience
+            </h3>
+            <p className="text-muted-foreground mb-6">
+              Had a great experience working with me? Help others discover the joy of custom artwork by sharing your story.
+            </p>
+            <Button
+              onClick={() => setShowForm(!showForm)}
+              className="bg-gold-600 hover:bg-gold-700"
+            >
+              {showForm ? 'Hide Form' : 'Write a Testimonial'}
+            </Button>
+          </div>
+
+          <AnimatePresence>
+            {showForm && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <TestimonialForm onSuccess={handleTestimonialSuccess} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Testimonials Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {testimonials.map((testimonial, index) => (
             <motion.div
@@ -500,11 +828,28 @@ function TestimonialsSection() {
                   <div className="font-semibold text-gold-700">
                     — {testimonial.name}
                   </div>
+                  {testimonial.artworkType && (
+                    <div className="text-sm text-muted-foreground mt-2 capitalize">
+                      {testimonial.artworkType} Commission
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </motion.div>
           ))}
         </div>
+
+        {testimonials.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-12"
+          >
+            <p className="text-muted-foreground text-lg">
+              No testimonials yet. Be the first to share your experience!
+            </p>
+          </motion.div>
+        )}
       </div>
     </section>
   );

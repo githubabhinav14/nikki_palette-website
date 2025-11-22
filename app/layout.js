@@ -1,6 +1,9 @@
 import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import { Instagram, Mail, Phone, Menu, X } from 'lucide-react';
+import { ThemeProvider } from '@/components/theme-provider';
+import { ThemeToggle } from '@/components/theme-toggle';
+import { NewsletterSubscription } from '@/components/newsletter';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' });
@@ -18,11 +21,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className={`${inter.variable} ${playfair.variable} font-inter antialiased`}>
-        <Navigation />
-        <main>{children}</main>
-        <Footer />
+        <ThemeProvider>
+          <Navigation />
+          <main>{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
@@ -54,14 +59,20 @@ function Navigation() {
               <a href="#testimonials" className="text-sm font-medium text-foreground hover:text-gold-600 transition-colors">
                 Testimonials
               </a>
+              <a href="#blog" className="text-sm font-medium text-foreground hover:text-gold-600 transition-colors">
+                Blog
+              </a>
               <a href="#contact" className="px-6 py-2 bg-gold-600 text-white rounded-full hover:bg-gold-700 transition-all hover:shadow-lg font-medium">
                 Contact
               </a>
             </div>
 
-            <button className="md:hidden p-2 text-foreground hover:text-gold-600">
-              <Menu size={24} />
-            </button>
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <button className="md:hidden p-2 text-foreground hover:text-gold-600">
+                <Menu size={24} />
+              </button>
+            </div>
           </div>
         </div>
       </nav>
@@ -91,8 +102,13 @@ function Footer() {
               <li><a href="#gallery" className="text-cream-300 hover:text-gold-400 transition-colors text-sm">Gallery</a></li>
               <li><a href="#about" className="text-cream-300 hover:text-gold-400 transition-colors text-sm">About</a></li>
               <li><a href="#services" className="text-cream-300 hover:text-gold-400 transition-colors text-sm">Services</a></li>
+              <li><a href="#blog" className="text-cream-300 hover:text-gold-400 transition-colors text-sm">Blog</a></li>
               <li><a href="#contact" className="text-cream-300 hover:text-gold-400 transition-colors text-sm">Contact</a></li>
             </ul>
+          </div>
+
+          <div>
+            <NewsletterSubscription variant="footer" />
           </div>
 
           <div>

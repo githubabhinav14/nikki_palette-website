@@ -40,9 +40,23 @@ const artworkSchema = z.object({
 });
 
 const testimonialSchema = z.object({
-  name: z.string().min(1),
-  message: z.string().min(10),
+  name: z.string().min(2, 'Name must be at least 2 characters').max(100),
+  email: z.string().email('Invalid email address'),
+  message: z.string().min(10, 'Testimonial must be at least 10 characters').max(1000),
   rating: z.number().min(1).max(5),
+  artworkType: z.string().optional(),
+  wouldRecommend: z.boolean().optional(),
+});
+
+const blogPostSchema = z.object({
+  title: z.string().min(5).max(200),
+  excerpt: z.string().min(20).max(500),
+  content: z.string().min(100),
+  category: z.enum(['techniques', 'inspiration', 'tutorials', 'behind-scenes', 'art-business']),
+  author: z.string().min(1),
+  imageUrl: z.string().url(),
+  readTime: z.string(),
+  tags: z.array(z.string()).optional(),
 });
 
 // API Routes Handler
@@ -60,9 +74,12 @@ export async function GET(request) {
       return NextResponse.json({ success: true, data: artworks });
     }
 
-    // Get all testimonials
+    // Get all testimonials (only approved ones for public display)
     if (pathname === '/testimonials') {
-      const testimonials = await database.collection('testimonials').find({}).toArray();
+      const testimonials = await database.collection('testimonials')
+        .find({ status: 'approved' })
+        .sort({ createdAt: -1 })
+        .toArray();
       return NextResponse.json({ success: true, data: testimonials });
     }
 
@@ -70,6 +87,88 @@ export async function GET(request) {
     if (pathname === '/services') {
       const services = await database.collection('services').find({}).toArray();
       return NextResponse.json({ success: true, data: services });
+    }
+
+    // Get all blog posts
+    if (pathname === '/blog') {
+      const blogPosts = await database.collection('blog').find({}).sort({ createdAt: -1 }).toArray();
+      return NextResponse.json({ success: true, data: blogPosts });
+    }
+
+    // Handle newsletter subscriptions
+    if (pathname === '/newsletter') {
+      try {
+        const body = await request.json();
+        const { email } = body;
+
+        // Validate email
+        if (!email) {
+          return NextResponse.json({ 
+            error: 'Email address is required' 
+          }, { status: 400 });
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          return NextResponse.json({ 
+            error: 'Invalid email format' 
+          }, { status: 400 });
+        }
+
+        // Check if email already exists
+        const existing = await database.collection('newsletter').findOne({ email });
+        if (existing) {
+          return NextResponse.json({ 
+            error: 'Email already subscribed to newsletter' 
+          }, { status: 409 });
+        }
+
+        // Add to newsletter collection
+        const subscription = {
+          id: uuidv4(),
+          email,
+          subscribedAt: new Date().toISOString(),
+          isActive: true,
+        };
+
+        await database.collection('newsletter').insertOne(subscription);
+
+        // Send welcome email (optional)
+        try {
+          await resend.emails.send({
+            from: 'Alex Artiste <noreply@alexartiste.com>',
+            to: email,
+            subject: 'Welcome to Alex Artiste Newsletter!',
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #D4AF37;">Welcome to Alex Artiste Newsletter!</h2>
+                <p>Thank you for subscribing to our newsletter. You'll receive updates on:</p>
+                <ul>
+                  <li>New artwork releases</li>
+                  <li>Blog posts and art insights</li>
+                  <li>Exclusive content and behind-the-scenes</li>
+                  <li>Special offers and commission opportunities</li>
+                </ul>
+                <p>We look forward to sharing our artistic journey with you!</p>
+                <p style="color: #666;">Best regards,<br>Alex Artiste</p>
+              </div>
+            `,
+          });
+        } catch (emailError) {
+          console.error('Failed to send welcome email:', emailError);
+          // Don't fail the subscription if email fails
+        }
+
+        return NextResponse.json({ 
+          success: true, 
+          message: 'Successfully subscribed to newsletter!' 
+        });
+      } catch (error) {
+        console.error('Newsletter subscription error:', error);
+        return NextResponse.json({ 
+          error: 'Failed to subscribe to newsletter' 
+        }, { status: 500 });
+      }
     }
 
     return NextResponse.json({ error: 'Route not found' }, { status: 404 });
@@ -148,14 +247,209 @@ export async function POST(request) {
 
     // Add testimonial
     if (pathname === '/testimonials') {
-      const validatedData = testimonialSchema.parse(body);
-      const testimonial = {
+      try {
+        const validatedData = testimonialSchema.parse(body);
+        
+        // Check if this email has already submitted a testimonial
+        const existingTestimonial = await database.collection('testimonials').findOne({ 
+          email: validatedData.email,
+          status: { $in: ['pending', 'approved'] }
+        });
+        
+        if (existingTestimonial) {
+          return NextResponse.json({ 
+            error: 'You have already submitted a testimonial. Multiple submissions are not allowed.' 
+          }, { status: 409 });
+        }
+        
+        const testimonial = {
+          id: uuidv4(),
+          ...validatedData,
+          status: 'pending', // Requires admin approval
+          createdAt: new Date().toISOString(),
+        };
+        
+        await database.collection('testimonials').insertOne(testimonial);
+        
+        // Send notification email to admin
+        try {
+          await resend.emails.send({
+            from: 'Art Portfolio <noreply@alexartiste.com>',
+            to: process.env.ADMIN_EMAIL || 'artist.contact@example.com',
+            subject: 'New Testimonial Submission - Pending Review',
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #D4AF37;">New Testimonial Submission</h2>
+                <p>A new testimonial has been submitted and is pending review:</p>
+                <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                  <p><strong>Name:</strong> ${validatedData.name}</p>
+                  <p><strong>Email:</strong> ${validatedData.email}</p>
+                  <p><strong>Rating:</strong> ${validatedData.rating}/5 stars</p>
+                  ${validatedData.artworkType ? `<p><strong>Artwork Type:</strong> ${validatedData.artworkType}</p>` : ''}
+                  <p><strong>Message:</strong></p>
+                  <p style="font-style: italic;">"${validatedData.message}"</p>
+                </div>
+                <p>Please log in to your admin panel to review and approve this testimonial.</p>
+              </div>
+            `,
+          });
+        } catch (emailError) {
+          console.error('Failed to send admin notification email:', emailError);
+          // Don't fail the testimonial submission if email fails
+        }
+        
+        return NextResponse.json({ 
+          success: true, 
+          message: 'Testimonial submitted successfully! It will be reviewed before publication.',
+          data: testimonial 
+        }, { status: 201 });
+        
+      } catch (error) {
+        if (error instanceof z.ZodError) {
+          return NextResponse.json({ 
+            error: 'Validation failed', 
+            details: error.errors 
+          }, { status: 400 });
+        }
+        
+        console.error('Testimonial submission error:', error);
+        return NextResponse.json({ 
+          error: 'Failed to submit testimonial. Please try again.' 
+        }, { status: 500 });
+      }
+    }
+
+    // Add blog post
+    if (pathname === '/blog') {
+      const validatedData = blogPostSchema.parse(body);
+      const blogPost = {
         id: uuidv4(),
         ...validatedData,
+        tags: validatedData.tags || [],
         createdAt: new Date().toISOString(),
       };
-      await database.collection('testimonials').insertOne(testimonial);
-      return NextResponse.json({ success: true, data: testimonial }, { status: 201 });
+      await database.collection('blog').insertOne(blogPost);
+      return NextResponse.json({ success: true, data: blogPost }, { status: 201 });
+    }
+
+    // Handle commission requests
+    if (pathname === '/commissions') {
+      try {
+        const formData = await request.formData();
+        
+        // Validate required fields
+        const requiredFields = ['name', 'email', 'serviceType', 'description'];
+        for (const field of requiredFields) {
+          if (!formData.get(field)) {
+            return NextResponse.json({ 
+              error: `Missing required field: ${field}` 
+            }, { status: 400 });
+          }
+        }
+        
+        // Validate email format
+        const email = formData.get('email');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          return NextResponse.json({ 
+            error: 'Invalid email format' 
+          }, { status: 400 });
+        }
+        
+        // Process uploaded files
+        const referenceImages = [];
+        const files = formData.getAll('referenceImages');
+        
+        for (const file of files) {
+          if (file instanceof File) {
+            // Validate file size (10MB limit)
+            if (file.size > 10 * 1024 * 1024) {
+              return NextResponse.json({ 
+                error: `File ${file.name} exceeds 10MB limit` 
+              }, { status: 400 });
+            }
+            
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+              return NextResponse.json({ 
+                error: `File ${file.name} is not an image` 
+              }, { status: 400 });
+            }
+            
+            // Store file info (in production, you'd upload to cloud storage)
+            referenceImages.push({
+              name: file.name,
+              type: file.type,
+              size: file.size,
+              uploadedAt: new Date().toISOString(),
+            });
+          }
+        }
+        
+        // Create commission request
+        const commission = {
+          id: uuidv4(),
+          name: formData.get('name'),
+          email: formData.get('email'),
+          phone: formData.get('phone') || '',
+          serviceType: formData.get('serviceType'),
+          budget: formData.get('budget') || '',
+          deadline: formData.get('deadline') || '',
+          size: formData.get('size') || '',
+          description: formData.get('description'),
+          referenceUrls: formData.get('referenceUrls') || '',
+          referenceImages: referenceImages,
+          status: 'pending',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        };
+        
+        await database.collection('commissions').insertOne(commission);
+        
+        // Send confirmation email (using existing email setup)
+        try {
+          const emailData = {
+            from: 'commissions@alexartiste.com',
+            to: commission.email,
+            subject: 'Commission Request Received - Alex Artiste',
+            html: `
+              <h2>Thank you for your commission request!</h2>
+              <p>Dear ${commission.name},</p>
+              <p>I've received your commission request for ${commission.serviceType}. I'll review your details and get back to you within 24 hours.</p>
+              <p><strong>Project Summary:</strong></p>
+              <ul>
+                <li>Service: ${commission.serviceType}</li>
+                <li>Budget: ${commission.budget || 'Not specified'}</li>
+                <li>Size: ${commission.size || 'Not specified'}</li>
+                <li>Deadline: ${commission.deadline || 'Not specified'}</li>
+              </ul>
+              <p>Best regards,<br>Alex Artiste</p>
+            `,
+          };
+          
+          // Send email using existing email service
+          await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: 'Alex Artiste',
+              email: 'noreply@alexartiste.com',
+              message: `Commission request received from ${commission.name} (${commission.email}) for ${commission.serviceType}`,
+              ...emailData
+            }),
+          });
+        } catch (emailError) {
+          console.error('Failed to send confirmation email:', emailError);
+          // Don't fail the commission submission if email fails
+        }
+        
+        return NextResponse.json({ success: true, data: commission });
+      } catch (error) {
+        console.error('Commission submission error:', error);
+        return NextResponse.json({ 
+          error: 'Failed to submit commission request' 
+        }, { status: 500 });
+      }
     }
 
     return NextResponse.json({ error: 'Route not found' }, { status: 404 });
