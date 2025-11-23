@@ -56,7 +56,6 @@ const BlogSection = lazy(() => import('@/components/blog-section').then(mod => (
 const CommissionForm = lazy(() => import('@/components/commission-form').then(mod => ({ default: mod.CommissionForm })));
 const NewsletterSubscription = lazy(() => import('@/components/newsletter').then(mod => ({ default: mod.NewsletterSubscription })));
 const TestimonialForm = lazy(() => import('@/components/testimonial-form').then(mod => ({ default: mod.TestimonialForm })));
-const ArtistVideoShowcase = lazy(() => import('@/components/artist-video-showcase'));
 
 
 function App() {
@@ -65,9 +64,6 @@ function App() {
       <HeroSection />
       <GallerySection />
       <AboutSection />
-      <Suspense fallback={<div className="py-20 bg-muted/30"><div className="container mx-auto px-4 text-center"><div className="inline-block w-12 h-12 border-4 border-gold-600 border-t-transparent rounded-full animate-spin"></div></div></div>}>
-        <ArtistVideoShowcase />
-      </Suspense>
       <ServicesSection />
       <BlogSection />
       <NewsletterSection />

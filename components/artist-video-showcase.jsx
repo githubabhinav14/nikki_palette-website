@@ -67,48 +67,30 @@ export default function ArtistVideoShowcase() {
   const displayedVideos = showAllVideos ? allVideoData : allVideoData.slice(0, 3);
 
   useEffect(() => {
-    // Try to auto-play videos immediately when component mounts
-    const tryAutoPlay = () => {
-      videoRefs.current.forEach((video) => {
-        if (video) {
-          video.play().catch(() => {
-            console.log('Initial autoplay prevented, will try on scroll');
-          });
-        }
-      });
-    };
-
-    // Try immediate autoplay with a small delay
-    setTimeout(tryAutoPlay, 500);
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Play ALL currently displayed videos when scrolled into view
-            const currentVideos = showAllVideos ? allVideoData : allVideoData.slice(0, 3);
-            currentVideos.forEach((_, index) => {
-              const video = videoRefs.current[index];
-              if (video) {
+            videoRefs.current.forEach((video, index) => {
+              if (video && index === currentVideo) {
                 video.play().catch(() => {
-                  console.log('Autoplay prevented for video', index);
+                  console.log('Autoplay prevented');
                 });
+                setIsPlaying(true);
               }
             });
-            setIsPlaying(true);
           } else {
-            // Pause all videos when scrolled away
             videoRefs.current.forEach((video) => {
               if (video) {
                 video.pause();
+                setIsPlaying(false);
               }
             });
-            setIsPlaying(false);
           }
         });
       },
       {
-        threshold: 0.3, // Lower threshold for earlier trigger
+        threshold: 0.5,
       }
     );
 
@@ -121,23 +103,7 @@ export default function ArtistVideoShowcase() {
         observer.unobserve(sectionRef.current);
       }
     };
-  }, [showAllVideos]); // Add showAllVideos dependency to handle state changes
-
-  // Auto-play newly revealed videos when "Watch More Videos" is clicked
-  useEffect(() => {
-    if (showAllVideos) {
-      // Small delay to allow DOM to update with new videos
-      setTimeout(() => {
-        videoRefs.current.forEach((video) => {
-          if (video) {
-            video.play().catch(() => {
-              console.log('Autoplay prevented for additional videos');
-            });
-          }
-        });
-      }, 300);
-    }
-  }, [showAllVideos]);
+  }, [currentVideo]);
 
   const handleVideoEnd = () => {
     const nextVideo = (currentVideo + 1) % displayedVideos.length;
@@ -238,10 +204,10 @@ export default function ArtistVideoShowcase() {
                       ref={(el) => (videoRefs.current[index] = el)}
                       src={video.videoUrl}
                       className="w-full aspect-video object-cover"
-                      muted={true} // Force muted for better auto-play compatibility
-                      loop={true} // Enable loop for continuous playback
+                      muted={isMuted}
+                      loop={false}
                       playsInline
-                      preload="auto" // Preload videos for faster playback
+                      autoPlay
                       onEnded={handleVideoEnd}
                       onTimeUpdate={() => updateProgress(index)}
                       poster="/images/artworks/placeholder-artwork.jpg"
