@@ -9,7 +9,6 @@ import { Input } from '@/components/ui/input';
 
 import { Textarea } from '@/components/ui/textarea';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import ArtistVideosSection from '@/components/artist-videos';
 
 // Custom debounce hook
 function useDebounce(value, delay) {
@@ -65,7 +64,6 @@ function App() {
       <HeroSection />
       <GallerySection />
       <AboutSection />
-      <ArtistVideosSection />
       <ServicesSection />
       <BlogSection />
       <NewsletterSection />
@@ -733,9 +731,6 @@ function AboutSection() {
     </section>
   );
 }
-
-// Artist Videos Section
-
 
 // Services Section
 function ServicesSection() {
