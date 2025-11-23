@@ -1226,8 +1226,8 @@ function ContactSection() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-lg mb-1">Email</h3>
-                    <a href="mailto:artist.contact@example.com" className="text-gold-600 hover:text-gold-700">
-                      artist.contact@example.com
+                    <a href="mailto:nikithanarsingoju1@gmail.com" className="text-gold-600 hover:text-gold-700">
+                      nikithanarsingoju1@gmail.com
                     </a>
                   </div>
                 </div>
@@ -1243,7 +1243,7 @@ function ContactSection() {
                   <div>
                     <h3 className="font-semibold text-lg mb-1">Phone</h3>
                     <a href="tel:+1234567890" className="text-gold-600 hover:text-gold-700">
-                      +123-456-7890
+                      7673926708
                     </a>
                   </div>
                 </div>
@@ -1259,12 +1259,12 @@ function ContactSection() {
                   <div>
                     <h3 className="font-semibold text-lg mb-1">Instagram</h3>
                     <a 
-                      href="https://instagram.com/MyArtGallery" 
+                      href="https://instagram.com/nikki_palette" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-gold-600 hover:text-gold-700"
                     >
-                      @MyArtGallery
+                      @nikki_palette
                     </a>
                   </div>
                 </div>

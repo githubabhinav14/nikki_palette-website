@@ -208,15 +208,19 @@ export function BlogSection() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Card className="h-full hover:shadow-xl transition-all group overflow-hidden">
-                  <div className="relative h-48 overflow-hidden">
+                <Card className="h-full hover:shadow-2xl transition-all duration-300 group overflow-hidden border-0">
+                  <div className="relative h-56 overflow-hidden">
                     <img
                       src={post.imageUrl}
                       alt={post.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
+                      onError={(e) => {
+                        e.target.src = '/images/blog/placeholder-blog.jpg';
+                      }}
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="absolute top-4 left-4">
-                      <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-medium">
+                      <span className="bg-primary/90 backdrop-blur-sm text-primary-foreground px-3 py-1 rounded-full text-xs font-medium shadow-lg">
                         {categories.find(cat => cat.id === post.category)?.label}
                       </span>
                     </div>
@@ -225,7 +229,7 @@ export function BlogSection() {
                     <CardTitle className="text-xl font-playfair text-primary group-hover:text-primary/80 transition-colors">
                       {post.title}
                     </CardTitle>
-                    <CardDescription className="line-clamp-2">
+                    <CardDescription className="line-clamp-3 text-sm leading-relaxed">
                       {post.excerpt}
                     </CardDescription>
                   </CardHeader>
@@ -240,9 +244,9 @@ export function BlogSection() {
                         {post.readTime}
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 mb-4">
-                      {post.tags.slice(0, 2).map((tag) => (
-                        <span key={tag} className="bg-muted text-muted-foreground px-2 py-1 rounded text-xs">
+                    <div className="flex items-center gap-2 mb-4 flex-wrap">
+                      {post.tags.slice(0, 3).map((tag) => (
+                        <span key={tag} className="bg-gradient-to-r from-primary/10 to-primary/5 text-primary px-3 py-1 rounded-full text-xs font-medium border border-primary/20">
                           #{tag}
                         </span>
                       ))}
@@ -256,9 +260,9 @@ export function BlogSection() {
                         variant="ghost"
                       />
                     </div>
-                    <Button className="w-full group">
+                    <Button className="w-full group bg-gradient-to-r from-primary to-primary/80 hover:from-primary hover:to-primary/90 text-white font-medium py-2.5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
                       Read More
-                      <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
                     </Button>
                   </CardContent>
                 </Card>

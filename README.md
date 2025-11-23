@@ -53,7 +53,7 @@ A beautiful, modern art portfolio website built with Next.js 14, MongoDB, and Re
    ```
    MONGO_URL=mongodb://localhost:27017/art-portfolio
    RESEND_API_KEY=re_bf8huStc_F1t7E7W1uTcYXwMaQCDqDfVD
-   ADMIN_EMAIL=artist.contact@example.com
+   ADMIN_EMAIL=nikithanarsingoju1@gmail.com
    NEXT_PUBLIC_BASE_URL=http://localhost:3000
    ```
 
@@ -159,7 +159,7 @@ Content-Type: application/json
 ### Current Setup
 - **API Key**: Configured in `.env`
 - **From Email**: `onboarding@resend.dev` (default)
-- **To Email**: `artist.contact@example.com`
+- **To Email**: `nikithanarsingoju1@gmail.com`
 
 ### For Production
 1. Sign up at [resend.com](https://resend.com)
@@ -184,9 +184,9 @@ The database is automatically seeded with:
 ### Update Personal Information
 
 1. **Contact Details** (`/app/app/layout.js`):
-   - Email: artist.contact@example.com
-   - Phone: +123-456-7890
-   - Instagram: @MyArtGallery
+   - Email: nikithanarsingoju1@gmail.com
+   - Phone: 7673926708
+   - Instagram: @nikki_palette
    - Location: New York City
 
 2. **About Section** (`/app/app/page.js`):
@@ -256,7 +256,7 @@ curl -X POST http://localhost:3000/api/contact \
 ## 🌐 Social Media Links
 
 Update these in `/app/app/layout.js`:
-- Instagram: https://instagram.com/MyArtGallery
+- Instagram: https://instagram.com/nikki_palette
 - WhatsApp: https://wa.me/1234567890
 
 ## 🎨 Image Sources
@@ -296,9 +296,9 @@ This project is open source and available for personal and commercial use.
 ## 👨‍🎨 Contact
 
 **Alex Artiste**
-- Email: artist.contact@example.com
-- Phone: +123-456-7890
-- Instagram: @MyArtGallery
+- Email: nikithanarsingoju1@gmail.com
+- Phone: 7673926708
+- Instagram: @nikki_palette
 - Location: New York City
 
 ---

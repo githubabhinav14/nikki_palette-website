@@ -209,7 +209,7 @@ export function SocialFollowButtons({
     { 
       name: 'Instagram', 
       icon: Instagram, 
-      url: 'https://instagram.com/MyArtGallery',
+      url: 'https://instagram.com/nikki_palette',
       color: 'hover:bg-pink-600'
     },
     { 

@@ -201,7 +201,7 @@ export async function POST(request) {
       try {
         const { data, error } = await resend.emails.send({
           from: 'Art Portfolio <onboarding@resend.dev>',
-          to: [process.env.ADMIN_EMAIL || 'artist.contact@example.com'],
+          to: [process.env.ADMIN_EMAIL || 'nikithanarsingoju1@gmail.com'],
           subject: `New Art Commission Inquiry from ${validatedData.name}`,
           replyTo: validatedData.email,
           react: ContactFormEmail({
@@ -275,7 +275,7 @@ export async function POST(request) {
         try {
           await resend.emails.send({
             from: 'Art Portfolio <noreply@alexartiste.com>',
-            to: process.env.ADMIN_EMAIL || 'artist.contact@example.com',
+            to: process.env.ADMIN_EMAIL || 'nikithanarsingoju1@gmail.com',
             subject: 'New Testimonial Submission - Pending Review',
             html: `
               <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">

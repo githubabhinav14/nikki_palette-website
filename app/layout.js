@@ -109,17 +109,17 @@ function Footer() {
           <div>
             <h4 className="text-lg font-playfair font-semibold mb-4 text-gold-400">Get in Touch</h4>
             <div className="space-y-3">
-              <a href="mailto:artist.contact@example.com" className="flex items-center gap-2 text-cream-300 hover:text-gold-400 transition-colors text-sm">
+              <a href="mailto:nikithanarsingoju1@gmail.com" className="flex items-center gap-2 text-cream-300 hover:text-gold-400 transition-colors text-sm">
                 <Mail size={16} />
-                artist.contact@example.com
+                nikithanarsingoju1@gmail.com
               </a>
               <a href="tel:+1234567890" className="flex items-center gap-2 text-cream-300 hover:text-gold-400 transition-colors text-sm">
                 <Phone size={16} />
-                +123-456-7890
+                7673926708
               </a>
-              <a href="https://instagram.com/MyArtGallery" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-cream-300 hover:text-gold-400 transition-colors text-sm">
+              <a href="https://instagram.com/nikki_palette" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-cream-300 hover:text-gold-400 transition-colors text-sm">
                 <Instagram size={16} />
-                @MyArtGallery
+                @nikki_palette
               </a>
               <p className="text-cream-300 text-sm">📍 Hyderabad</p>
             </div>
@@ -132,7 +132,7 @@ function Footer() {
               &copy; {new Date().getFullYear()} Nikki Palette. All rights reserved.
             </p>
             <div className="flex gap-4">
-              <a href="https://instagram.com/MyArtGallery" target="_blank" rel="noopener noreferrer" className="text-cream-400 hover:text-gold-400 transition-colors">
+              <a href="https://instagram.com/nikki_palette" target="_blank" rel="noopener noreferrer" className="text-cream-400 hover:text-gold-400 transition-colors">
                 <Instagram size={20} />
               </a>
               <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" className="text-cream-400 hover:text-gold-400 transition-colors">
