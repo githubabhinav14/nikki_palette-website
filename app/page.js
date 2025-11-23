@@ -222,61 +222,49 @@ function GallerySection() {
 
   const fetchArtworks = async () => {
     setLoading(true);
-    try {
-      // Try to fetch from API first
-      const response = await fetch('/api/artworks');
-      const data = await response.json();
-      if (data.data && data.data.length > 0) {
-        setArtworks(data.data);
-        setFilteredArtworks(data.data);
-      } else {
-        // Fallback to local artwork data
-        throw new Error('No data from API');
-      }
-    } catch (error) {
-      console.log('Using local artwork data');
-      // Load local artwork data
-      try {
-        const response = await fetch('/images/artworks/artwork-data.json');
-        const localData = await response.json();
-        setArtworks(localData);
-        setFilteredArtworks(localData);
-      } catch (localError) {
-        console.error('Error loading local artwork data:', localError);
-        // Final fallback - create basic artwork entries from image files
-        const fallbackArtworks = [
-          {
-            id: 'artwork-1',
-            title: 'Vibrant Portrait Study',
-            description: 'A colorful portrait exploring light and shadow',
-            category: 'portraits',
-            imageUrl: '/images/artworks/IMG-20220901-WA0035.jpg',
-            createdAt: '2022-09-01T00:00:00.000Z',
-            medium: 'Digital Art'
-          },
-          {
-            id: 'artwork-2',
-            title: 'Modern Character Design',
-            description: 'Contemporary character with bold colors',
-            category: 'digital',
-            imageUrl: '/images/artworks/IMG-20250730-WA0001.jpg',
-            createdAt: '2025-07-30T00:00:00.000Z',
-            medium: 'Digital Illustration'
-          },
-          {
-            id: 'artwork-3',
-            title: 'Nature Inspired Portrait',
-            description: 'Portrait with natural elements and soft tones',
-            category: 'portraits',
-            imageUrl: '/images/artworks/IMG_20210522_143723.jpg',
-            createdAt: '2021-05-22T00:00:00.000Z',
-            medium: 'Pencil and Digital'
-          }
-        ];
-        setArtworks(fallbackArtworks);
-        setFilteredArtworks(fallbackArtworks);
-      }
-    }
+    
+    // Directly use images from Portfolio Gallery images folder
+    const portfolioImages = [
+      'IMG-20220901-WA0035.jpg',
+      'IMG-20250730-WA0001.jpg',
+      'IMG_20210522_143723.jpg',
+      'IMG_20210617_171832_027.jpg',
+      'IMG_20220131_152556-02.jpeg',
+      'IMG_20220330_142352.jpg',
+      'IMG_20220604_160829_107.jpg',
+      'IMG_20220604_201440_113.jpg',
+      'IMG_20220604_201511_382.jpg',
+      'IMG_20221022_135924.jpg',
+      'IMG_20221022_140441.jpg',
+      'IMG_20221022_142121.jpg',
+      'IMG_20221022_144905.jpg',
+      'IMG_20221022_145856.jpg',
+      'IMG_20221106_125129_724.jpg',
+      'IMG_20221106_171120_582.jpg',
+      'IMG_20221106_191620_625.jpg',
+      'IMG_20221107_173133_545.jpg',
+      'IMG_20221108_193022_059.jpg',
+      'IMG_20221109_185234_818.jpg',
+      'IMG_20221110_183351_400.jpg',
+      'IMG_20221123_220753_842.jpg',
+      'IMG_20221201_160135-02.jpeg',
+      'IMG_20221206_131854.jpg',
+      'IMG_20250627_170931.jpg',
+      'IMG_20250627_171615.jpg'
+    ];
+
+    const artworks = portfolioImages.map((filename, index) => ({
+      id: `artwork-${index + 1}`,
+      title: `Artwork ${index + 1}`,
+      description: `Portfolio piece ${index + 1}`,
+      category: 'portfolio',
+      imageUrl: `/Portfolio Gallery images/${filename}`,
+      createdAt: new Date().toISOString(),
+      medium: 'Mixed Media'
+    }));
+
+    setArtworks(artworks);
+    setFilteredArtworks(artworks);
     setLoading(false);
   };
 
