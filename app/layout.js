@@ -1,8 +1,6 @@
 import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import { Instagram, Mail, Phone, Menu, X } from 'lucide-react';
-import { ThemeProvider } from '@/components/theme-provider';
-import { ThemeToggle } from '@/components/theme-toggle';
 import { NewsletterSubscription } from '@/components/newsletter';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
@@ -23,11 +21,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className={`${inter.variable} ${playfair.variable} font-inter antialiased`}>
-        <ThemeProvider>
-          <Navigation />
-          <main>{children}</main>
-          <Footer />
-        </ThemeProvider>
+        <Navigation />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
@@ -68,7 +64,6 @@ function Navigation() {
             </div>
 
             <div className="flex items-center gap-2">
-              <ThemeToggle />
               <button className="md:hidden p-2 text-foreground hover:text-gold-600">
                 <Menu size={24} />
               </button>

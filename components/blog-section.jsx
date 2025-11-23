@@ -35,43 +35,79 @@ export function BlogSection() {
       setBlogPosts(data.data || [])
     } catch (error) {
       console.error('Error fetching blog posts:', error)
-      // Fallback sample data
+      // Enhanced mock blog posts for better visual appeal
       setBlogPosts([
         {
           id: '1',
-          title: 'The Art of Portrait Drawing: Techniques and Tips',
-          excerpt: 'Learn the fundamental techniques for creating stunning portrait drawings that capture the essence of your subject.',
+          title: 'Mastering the Art of Color Theory in Portrait Painting',
+          excerpt: 'Discover how understanding color relationships can transform your portrait paintings from good to breathtaking. Learn the secrets of warm and cool tones.',
           content: 'Full article content here...',
           category: 'techniques',
           author: 'Nikkitha',
-          imageUrl: 'https://images.unsplash.com/photo-1579783928621-7a13d66a62d1',
-          readTime: '8 min read',
-          tags: ['portrait', 'drawing', 'techniques'],
-          createdAt: new Date().toISOString(),
+          imageUrl: 'https://images.unsplash.com/photo-1578321272176-7f77a8a9d9c8?w=800&h=600&fit=crop',
+          readTime: '12 min read',
+          tags: ['color theory', 'portrait', 'painting', 'masterclass'],
+          createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days ago
         },
         {
           id: '2',
-          title: 'Finding Inspiration in Nature: A Creative Journey',
-          excerpt: 'Discover how the natural world can inspire your artistic creations and bring new life to your work.',
+          title: 'From Sketch to Masterpiece: My Creative Process Revealed',
+          excerpt: 'Take a journey through my artistic process, from initial concept sketches to finished artwork. See how ideas evolve into stunning creations.',
           content: 'Full article content here...',
-          category: 'inspiration',
+          category: 'behind-scenes',
           author: 'Nikkitha',
-          imageUrl: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9',
-          readTime: '6 min read',
-          tags: ['nature', 'inspiration', 'creativity'],
-          createdAt: new Date().toISOString(),
+          imageUrl: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&h=600&fit=crop',
+          readTime: '8 min read',
+          tags: ['process', 'sketching', 'creation', 'workflow'],
+          createdAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(), // 14 days ago
         },
         {
           id: '3',
-          title: 'Digital Art vs Traditional: Finding Your Medium',
-          excerpt: 'Explore the pros and cons of digital and traditional art mediums to find what works best for your style.',
+          title: 'The Psychology of Art: How Colors Affect Emotions',
+          excerpt: 'Explore the fascinating connection between colors and human emotions. Learn how to use this knowledge to create more impactful artwork.',
+          content: 'Full article content here...',
+          category: 'inspiration',
+          author: 'Nikkitha',
+          imageUrl: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&h=600&fit=crop',
+          readTime: '10 min read',
+          tags: ['psychology', 'emotions', 'color', 'impact'],
+          createdAt: new Date(Date.now() - 21 * 24 * 60 * 60 * 1000).toISOString(), // 21 days ago
+        },
+        {
+          id: '4',
+          title: 'T-Shirt Design Trends 2024: What\'s Hot in Wearable Art',
+          excerpt: 'Stay ahead of the curve with the latest t-shirt design trends. From minimalist graphics to bold statements, discover what\'s trending now.',
           content: 'Full article content here...',
           category: 'art-business',
           author: 'Nikkitha',
-          imageUrl: 'https://images.unsplash.com/photo-1635322966219-b75ed372eb01',
-          readTime: '10 min read',
-          tags: ['digital art', 'traditional', 'mediums'],
-          createdAt: new Date().toISOString(),
+          imageUrl: 'https://images.unsplash.com/photo-1520975954732-35dd22299614?w=800&h=600&fit=crop',
+          readTime: '6 min read',
+          tags: ['t-shirt design', 'trends', 'fashion', '2024'],
+          createdAt: new Date(Date.now() - 28 * 24 * 60 * 60 * 1000).toISOString(), // 28 days ago
+        },
+        {
+          id: '5',
+          title: 'Digital vs Traditional: Why I Choose Both Mediums',
+          excerpt: 'As an artist who works in both digital and traditional mediums, I share my insights on when to use each and why both are essential.',
+          content: 'Full article content here...',
+          category: 'techniques',
+          author: 'Nikkitha',
+          imageUrl: 'https://images.unsplash.com/photo-1611095564154-dc2d4ab52303?w=800&h=600&fit=crop',
+          readTime: '9 min read',
+          tags: ['digital art', 'traditional', 'comparison', 'mediums'],
+          createdAt: new Date(Date.now() - 35 * 24 * 60 * 60 * 1000).toISOString(), // 35 days ago
+        },
+        {
+          id: '6',
+          title: 'Finding Your Artistic Voice: A Journey of Self-Discovery',
+          excerpt: 'Every artist has a unique voice. Learn how to discover and develop your own artistic style that sets your work apart from others.',
+          content: 'Full article content here...',
+          category: 'inspiration',
+          author: 'Nikkitha',
+          imageUrl: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop',
+          readTime: '11 min read',
+          tags: ['artistic voice', 'style', 'journey', 'self-discovery'],
+          createdAt: new Date(Date.now() - 42 * 24 * 60 * 60 * 1000).toISOString(), // 42 days ago
         },
       ])
     }

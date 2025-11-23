@@ -13,7 +13,7 @@ import { CommissionForm } from '@/components/commission-form';
 import { ShareButtons } from '@/components/social-share';
 import { NewsletterSubscription } from '@/components/newsletter';
 import { TestimonialForm } from '@/components/testimonial-form';
-import { AnalyticsDashboard } from '@/components/analytics-dashboard';
+
 
 function App() {
   return (
@@ -24,7 +24,6 @@ function App() {
       <ServicesSection />
       <BlogSection />
       <NewsletterSection />
-      <AnalyticsSection />
       <TestimonialsSection />
       <FAQSection />
       <ContactSection />
@@ -523,17 +522,6 @@ function NewsletterSection() {
   );
 }
 
-// Analytics Section
-function AnalyticsSection() {
-  return (
-    <section id="analytics" className="py-20 bg-background">
-      <div className="container mx-auto px-4">
-        <AnalyticsDashboard variant="full" />
-      </div>
-    </section>
-  );
-}
-
 // About Section
 function AboutSection() {
   return (
@@ -789,9 +777,34 @@ function TestimonialsSection() {
     try {
       const response = await fetch('/api/testimonials');
       const data = await response.json();
-      setTestimonials(data.data || []);
+      const realTestimonials = data.data || [];
+      
+      // Add a mock testimonial if there are no real testimonials
+      if (realTestimonials.length === 0) {
+        const mockTestimonial = {
+          id: 'mock-1',
+          name: 'Sarah Johnson',
+          rating: 5,
+          message: 'Nikkitha created the most beautiful custom portrait of my family. Her attention to detail and artistic vision exceeded all my expectations. The entire process was smooth and professional. I highly recommend her services!',
+          artworkType: 'portrait',
+          createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString() // 30 days ago
+        };
+        setTestimonials([mockTestimonial]);
+      } else {
+        setTestimonials(realTestimonials);
+      }
     } catch (error) {
       console.error('Error fetching testimonials:', error);
+      // Add mock testimonial if API fails
+      const mockTestimonial = {
+        id: 'mock-1',
+        name: 'Sarah Johnson',
+        rating: 5,
+        message: 'Nikkitha created the most beautiful custom portrait of my family. Her attention to detail and artistic vision exceeded all my expectations. The entire process was smooth and professional. I highly recommend her services!',
+        artworkType: 'portrait',
+        createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString() // 30 days ago
+      };
+      setTestimonials([mockTestimonial]);
     }
   };
 
