@@ -258,5 +258,115 @@
     "createdAt": "2025-06-27T00:00:00.000Z",
     "medium": "Contemporary Digital",
     "dimensions": "Modern Format"
+  },
+  {
+    "id": "artwork-27",
+    "title": "Spring Collection Art",
+    "description": "Artwork from spring collection showcasing seasonal themes",
+    "category": "digital",
+    "imageUrl": "/images/artworks/IMG-20250511-WA0016.jpg",
+    "createdAt": "2025-05-11T00:00:00.000Z",
+    "medium": "Digital Collection",
+    "dimensions": "Collection Format"
+  },
+  {
+    "id": "artwork-28",
+    "title": "November Portrait Study",
+    "description": "Portrait study created in November with detailed expression",
+    "category": "portraits",
+    "imageUrl": "/images/artworks/IMG_20221121_181921_925.jpg",
+    "createdAt": "2022-11-21T00:00:00.000Z",
+    "medium": "Portrait Study",
+    "dimensions": "Study Format"
+  },
+  {
+    "id": "artwork-29",
+    "title": "December Artwork",
+    "description": "Creative piece from December collection",
+    "category": "digital",
+    "imageUrl": "/images/artworks/IMG_20221206_135402-04.jpeg",
+    "createdAt": "2022-12-06T00:00:00.000Z",
+    "medium": "December Collection",
+    "dimensions": "Seasonal Format"
+  },
+  {
+    "id": "artwork-30",
+    "title": "Winter Scene",
+    "description": "Winter-themed artwork with seasonal elements",
+    "category": "digital",
+    "imageUrl": "/images/artworks/IMG_20221209_113804.jpg",
+    "createdAt": "2022-12-09T00:00:00.000Z",
+    "medium": "Seasonal Art",
+    "dimensions": "Winter Format"
+  },
+  {
+    "id": "artwork-31",
+    "title": "February Creation",
+    "description": "Artwork created in February showcasing winter themes",
+    "category": "digital",
+    "imageUrl": "/images/artworks/IMG_20250224_161335.jpg",
+    "createdAt": "2025-02-24T00:00:00.000Z",
+    "medium": "Winter Creation",
+    "dimensions": "February Format"
+  },
+  {
+    "id": "artwork-32",
+    "title": "March Illustration",
+    "description": "Spring illustration created in March",
+    "category": "digital",
+    "imageUrl": "/images/artworks/IMG_20250325_211821.jpg",
+    "createdAt": "2025-03-25T00:00:00.000Z",
+    "medium": "Spring Illustration",
+    "dimensions": "March Format"
+  },
+  {
+    "id": "artwork-33",
+    "title": "June Collection - Portrait 1",
+    "description": "First portrait from June collection series",
+    "category": "portraits",
+    "imageUrl": "/images/artworks/IMG_20250627_171343.jpg",
+    "createdAt": "2025-06-27T00:00:00.000Z",
+    "medium": "June Collection",
+    "dimensions": "Collection Portrait"
+  },
+  {
+    "id": "artwork-34",
+    "title": "June Collection - Art 2",
+    "description": "Second artwork from June collection series",
+    "category": "digital",
+    "imageUrl": "/images/artworks/IMG_20250627_171745.jpg",
+    "createdAt": "2025-06-27T00:00:00.000Z",
+    "medium": "June Collection",
+    "dimensions": "Collection Art"
+  },
+  {
+    "id": "artwork-35",
+    "title": "October Portrait",
+    "description": "Autumn portrait created in October with warm tones",
+    "category": "portraits",
+    "imageUrl": "/images/artworks/IMG_20251026_160050.jpg",
+    "createdAt": "2025-10-26T00:00:00.000Z",
+    "medium": "Autumn Portrait",
+    "dimensions": "October Format"
+  },
+  {
+    "id": "artwork-36",
+    "title": "Adobe Lightroom Study",
+    "description": "Digital art study created using Adobe Lightroom mobile",
+    "category": "digital",
+    "imageUrl": "/images/artworks/Screenshot_20210523_202553_com.adobe.lrmobile.jpg",
+    "createdAt": "2021-05-23T00:00:00.000Z",
+    "medium": "Mobile Digital Art",
+    "dimensions": "Mobile Format"
+  },
+  {
+    "id": "artwork-37",
+    "title": "Snapchat Art Creation",
+    "description": "Creative piece originally shared on Snapchat",
+    "category": "digital",
+    "imageUrl": "/images/artworks/Snapchat-1546328117.jpg",
+    "createdAt": "2022-01-01T00:00:00.000Z",
+    "medium": "Social Media Art",
+    "dimensions": "Snapchat Format"
   }
 ]

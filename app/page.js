@@ -226,6 +226,7 @@ function GallerySection() {
     // Directly use images from Portfolio Gallery images folder
     const portfolioImages = [
       'IMG-20220901-WA0035.jpg',
+      'IMG-20250511-WA0016.jpg',
       'IMG-20250730-WA0001.jpg',
       'IMG_20210522_143723.jpg',
       'IMG_20210617_171832_027.jpg',
@@ -246,11 +247,21 @@ function GallerySection() {
       'IMG_20221108_193022_059.jpg',
       'IMG_20221109_185234_818.jpg',
       'IMG_20221110_183351_400.jpg',
+      'IMG_20221121_181921_925.jpg',
       'IMG_20221123_220753_842.jpg',
       'IMG_20221201_160135-02.jpeg',
       'IMG_20221206_131854.jpg',
+      'IMG_20221206_135402-04.jpeg',
+      'IMG_20221209_113804.jpg',
+      'IMG_20250224_161335.jpg',
+      'IMG_20250325_211821.jpg',
       'IMG_20250627_170931.jpg',
-      'IMG_20250627_171615.jpg'
+      'IMG_20250627_171343.jpg',
+      'IMG_20250627_171615.jpg',
+      'IMG_20250627_171745.jpg',
+      'IMG_20251026_160050.jpg',
+      'Screenshot_20210523_202553_com.adobe.lrmobile.jpg',
+      'Snapchat-1546328117.jpg'
     ];
 
     const artworks = portfolioImages.map((filename, index) => ({
@@ -419,12 +430,10 @@ function GallerySection() {
                 onClick={() => handleArtworkSelect(artwork)}
               >
                 <div className="aspect-square overflow-hidden">
-                  <Image
+                  <img
                     src={artwork.imageUrl}
                     alt={artwork.title}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     loading="lazy"
                   />
                 </div>
