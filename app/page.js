@@ -1,18 +1,61 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Star, ChevronDown, Plus, Minus, Sparkles, Palette, Brush, Paintbrush, Mail, Phone, Instagram, MessageCircle } from 'lucide-react';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { BlogSection } from '@/components/blog-section';
-import { CommissionForm } from '@/components/commission-form';
-import { ShareButtons } from '@/components/social-share';
-import { NewsletterSubscription } from '@/components/newsletter';
-import { TestimonialForm } from '@/components/testimonial-form';
+
+// Custom debounce hook
+function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+
+// Blog Section Skeleton
+function BlogSectionSkeleton() {
+  return (
+    <section id="blog" className="py-20 bg-muted/30">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <div className="h-12 bg-gray-200 rounded-lg w-64 mx-auto mb-4 animate-pulse"></div>
+          <div className="h-6 bg-gray-200 rounded w-96 mx-auto animate-pulse"></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="bg-white rounded-lg shadow-md p-6 animate-pulse">
+              <div className="h-48 bg-gray-200 rounded-lg mb-4"></div>
+              <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+              <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
+              <div className="h-3 bg-gray-200 rounded w-5/6"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Lazy load heavy components
+const BlogSection = lazy(() => import('@/components/blog-section').then(mod => ({ default: mod.BlogSection })));
+const CommissionForm = lazy(() => import('@/components/commission-form').then(mod => ({ default: mod.CommissionForm })));
+const NewsletterSubscription = lazy(() => import('@/components/newsletter').then(mod => ({ default: mod.NewsletterSubscription })));
+const TestimonialForm = lazy(() => import('@/components/testimonial-form').then(mod => ({ default: mod.TestimonialForm })));
 
 
 function App() {
@@ -554,11 +597,17 @@ function AboutSection() {
           >
             <div className="relative group">
               <div className="absolute -inset-4 bg-gradient-to-r from-gold-400 to-gold-600 rounded-3xl blur-lg opacity-25 group-hover:opacity-40 transition-opacity duration-300"></div>
-              <img
-                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&h=500&fit=crop&crop=face"
-                alt="Nikkitha - Artist Profile"
-                className="relative rounded-3xl shadow-2xl w-full h-auto object-cover border-4 border-white"
-              />
+              <div className="relative rounded-3xl shadow-2xl w-full aspect-square border-4 border-white overflow-hidden">
+                <Image
+                  src="/images/artist/placeholder-profile.jpg"
+                  alt="Nikkitha - Artist Profile"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 90vw, (max-width: 1200px) 50vw, 33vw"
+                  quality={90}
+                  priority
+                />
+              </div>
               <div className="absolute -bottom-6 -right-6 bg-gold-600 text-white p-4 rounded-full shadow-2xl border-4 border-white">
                 <Paintbrush className="w-8 h-8" />
               </div>
@@ -655,11 +704,17 @@ function AboutSection() {
                   </p>
                 </div>
                 <div className="lg:col-span-2">
-                  <img
-                    src="https://images.unsplash.com/photo-1692859532235-c93fa73bd5d0"
-                    alt="Artist workspace with paintings and creative tools"
-                    className="rounded-2xl shadow-2xl w-full h-64 object-cover"
-                  />
+                  <div className="relative rounded-2xl shadow-2xl w-full h-64 overflow-hidden">
+                    <Image
+                      src="/images/gallery/placeholder-gallery.jpg"
+                      alt="Artist workspace with paintings and creative tools"
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 90vw, (max-width: 1200px) 50vw, 33vw"
+                      quality={85}
+                      loading="lazy"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

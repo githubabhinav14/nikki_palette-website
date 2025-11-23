@@ -44,7 +44,7 @@ export function BlogSection() {
           content: 'Full article content here...',
           category: 'techniques',
           author: 'Nikkitha',
-          imageUrl: 'https://images.unsplash.com/photo-1578321272176-7f77a8a9d9c8?w=800&h=600&fit=crop',
+          imageUrl: '/images/blog/placeholder-blog.jpg',
           readTime: '12 min read',
           tags: ['color theory', 'portrait', 'painting', 'masterclass'],
           createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days ago
@@ -56,7 +56,7 @@ export function BlogSection() {
           content: 'Full article content here...',
           category: 'behind-scenes',
           author: 'Nikkitha',
-          imageUrl: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&h=600&fit=crop',
+          imageUrl: '/images/blog/placeholder-blog.jpg',
           readTime: '8 min read',
           tags: ['process', 'sketching', 'creation', 'workflow'],
           createdAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(), // 14 days ago
@@ -68,7 +68,7 @@ export function BlogSection() {
           content: 'Full article content here...',
           category: 'inspiration',
           author: 'Nikkitha',
-          imageUrl: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&h=600&fit=crop',
+          imageUrl: '/images/blog/placeholder-blog.jpg',
           readTime: '10 min read',
           tags: ['psychology', 'emotions', 'color', 'impact'],
           createdAt: new Date(Date.now() - 21 * 24 * 60 * 60 * 1000).toISOString(), // 21 days ago
@@ -80,7 +80,7 @@ export function BlogSection() {
           content: 'Full article content here...',
           category: 'art-business',
           author: 'Nikkitha',
-          imageUrl: 'https://images.unsplash.com/photo-1520975954732-35dd22299614?w=800&h=600&fit=crop',
+          imageUrl: '/images/blog/placeholder-blog.jpg',
           readTime: '6 min read',
           tags: ['t-shirt design', 'trends', 'fashion', '2024'],
           createdAt: new Date(Date.now() - 28 * 24 * 60 * 60 * 1000).toISOString(), // 28 days ago
@@ -92,7 +92,7 @@ export function BlogSection() {
           content: 'Full article content here...',
           category: 'techniques',
           author: 'Nikkitha',
-          imageUrl: 'https://images.unsplash.com/photo-1611095564154-dc2d4ab52303?w=800&h=600&fit=crop',
+          imageUrl: '/images/blog/placeholder-blog.jpg',
           readTime: '9 min read',
           tags: ['digital art', 'traditional', 'comparison', 'mediums'],
           createdAt: new Date(Date.now() - 35 * 24 * 60 * 60 * 1000).toISOString(), // 35 days ago
@@ -104,7 +104,7 @@ export function BlogSection() {
           content: 'Full article content here...',
           category: 'inspiration',
           author: 'Nikkitha',
-          imageUrl: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop',
+          imageUrl: '/images/blog/placeholder-blog.jpg',
           readTime: '11 min read',
           tags: ['artistic voice', 'style', 'journey', 'self-discovery'],
           createdAt: new Date(Date.now() - 42 * 24 * 60 * 60 * 1000).toISOString(), // 42 days ago
