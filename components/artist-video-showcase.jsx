@@ -81,15 +81,17 @@ export default function ArtistVideoShowcase() {
     // Try immediate autoplay with a small delay
     setTimeout(tryAutoPlay, 500);
 
-    const observer = new IntersectionObserver (
+    const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Play ALL videos directly when scrolled into view
-            videoRefs.current.forEach((video) => {
+            // Play ALL currently displayed videos when scrolled into view
+            const currentVideos = showAllVideos ? allVideoData : allVideoData.slice(0, 3);
+            currentVideos.forEach((_, index) => {
+              const video = videoRefs.current[index];
               if (video) {
                 video.play().catch(() => {
-                  console.log('Autoplay prevented');
+                  console.log('Autoplay prevented for video', index);
                 });
               }
             });
@@ -119,7 +121,23 @@ export default function ArtistVideoShowcase() {
         observer.unobserve(sectionRef.current);
       }
     };
-  }, []); // Remove currentVideo dependency to avoid re-triggering
+  }, [showAllVideos]); // Add showAllVideos dependency to handle state changes
+
+  // Auto-play newly revealed videos when "Watch More Videos" is clicked
+  useEffect(() => {
+    if (showAllVideos) {
+      // Small delay to allow DOM to update with new videos
+      setTimeout(() => {
+        videoRefs.current.forEach((video) => {
+          if (video) {
+            video.play().catch(() => {
+              console.log('Autoplay prevented for additional videos');
+            });
+          }
+        });
+      }, 300);
+    }
+  }, [showAllVideos]);
 
   const handleVideoEnd = () => {
     const nextVideo = (currentVideo + 1) % displayedVideos.length;
