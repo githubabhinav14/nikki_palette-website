@@ -67,43 +67,44 @@ export default function ArtistVideoShowcase() {
   const displayedVideos = showAllVideos ? allVideoData : allVideoData.slice(0, 3);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
+    const observers = [];
+    const options = { threshold: 0.6 };
+
+    videoRefs.current.forEach((video, index) => {
+      if (!video) return;
+      const obs = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            videoRefs.current.forEach((video, index) => {
-              if (video && index === currentVideo) {
-                video.play().catch(() => {
-                  console.log('Autoplay prevented');
-                });
-                setIsPlaying(true);
-              }
+            videoRefs.current.forEach((v, i) => {
+              if (v && i !== index) v.pause();
             });
+            video.play().catch(() => {
+            });
+            setCurrentVideo(index);
+            setIsPlaying(true);
           } else {
-            videoRefs.current.forEach((video) => {
-              if (video) {
-                video.pause();
-                setIsPlaying(false);
-              }
-            });
+            video.pause();
+            if (index === currentVideo) setIsPlaying(false);
           }
         });
-      },
-      {
-        threshold: 0.5,
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+      }, options);
+      obs.observe(video);
+      observers.push(obs);
+    });
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
+      observers.forEach((obs) => obs.disconnect());
     };
-  }, [currentVideo]);
+  }, [showAllVideos, displayedVideos.length]);
+
+  useEffect(() => {
+    const initial = videoRefs.current[currentVideo] || videoRefs.current[0];
+    if (initial) {
+      initial.play().catch(() => {
+      });
+      setIsPlaying(true);
+    }
+  }, [showAllVideos]);
 
   const handleVideoEnd = () => {
     const nextVideo = (currentVideo + 1) % displayedVideos.length;
