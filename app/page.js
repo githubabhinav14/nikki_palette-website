@@ -56,6 +56,7 @@ const BlogSection = lazy(() => import('@/components/blog-section').then(mod => (
 const CommissionForm = lazy(() => import('@/components/commission-form').then(mod => ({ default: mod.CommissionForm })));
 const NewsletterSubscription = lazy(() => import('@/components/newsletter').then(mod => ({ default: mod.NewsletterSubscription })));
 const TestimonialForm = lazy(() => import('@/components/testimonial-form').then(mod => ({ default: mod.TestimonialForm })));
+const ArtistVideoShowcase = lazy(() => import('@/components/artist-video-showcase'))
 
 
 function App() {
@@ -63,6 +64,9 @@ function App() {
     <div className="min-h-screen bg-background">
       <HeroSection />
       <GallerySection />
+      <Suspense fallback={<div className="py-20 text-center text-muted-foreground">Loading videos…</div>}>
+        <ArtistVideoShowcase />
+      </Suspense>
       <AboutSection />
       <ServicesSection />
       <BlogSection />
