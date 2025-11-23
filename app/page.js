@@ -65,10 +65,10 @@ function App() {
     <div className="min-h-screen bg-background">
       <HeroSection />
       <GallerySection />
+      <AboutSection />
       <Suspense fallback={<div className="py-20 text-center text-muted-foreground">Loading videos…</div>}>
         <ArtistVideoShowcase />
       </Suspense>
-      <AboutSection />
       <ServicesSection />
       <BlogSection />
       <NewsletterSection />
