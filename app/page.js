@@ -463,9 +463,10 @@ function GallerySection() {
                 {/* Close Button */}
                 <button
                   onClick={() => setSelectedArtwork(null)}
-                  className="absolute top-4 right-4 z-20 bg-black/70 hover:bg-black/90 text-white p-2 rounded-full transition-all"
+                  className="absolute top-4 right-4 z-30 bg-white/90 hover:bg-white text-black p-3 rounded-full transition-all shadow-lg hover:shadow-xl"
+                  title="Close (Esc)"
                 >
-                  <X size={24} />
+                  <X size={28} />
                 </button>
 
                 {/* Navigation Buttons */}
@@ -473,7 +474,8 @@ function GallerySection() {
                   <>
                     <button
                       onClick={() => navigateArtwork('prev')}
-                      className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/70 hover:bg-black/90 text-white p-3 rounded-full transition-all"
+                      className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/90 hover:bg-white text-black p-3 rounded-full transition-all shadow-lg hover:shadow-xl"
+                      title="Previous Image (←)"
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -481,7 +483,8 @@ function GallerySection() {
                     </button>
                     <button
                       onClick={() => navigateArtwork('next')}
-                      className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/70 hover:bg-black/90 text-white p-3 rounded-full transition-all"
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/90 hover:bg-white text-black p-3 rounded-full transition-all shadow-lg hover:shadow-xl"
+                      title="Next Image (→)"
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -502,24 +505,25 @@ function GallerySection() {
                   <div className="flex-1 bg-black flex items-center justify-center p-4 lg:p-8 relative overflow-hidden">
                     <motion.div
                       key={selectedArtwork.id}
-                      className={`relative max-w-full max-h-[60vh] lg:max-h-[80vh] cursor-zoom-in transition-transform duration-300 ${
-                        isZoomed ? 'scale-150 cursor-zoom-out' : 'hover:scale-105'
+                      className={`relative w-full h-full flex items-center justify-center cursor-zoom-in ${
+                        isZoomed ? 'cursor-zoom-out' : ''
                       }`}
                       onClick={() => setIsZoomed(!isZoomed)}
                       initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: isZoomed ? 1.5 : 1 }}
+                      animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
                       transition={{ duration: 0.3 }}
-                      style={{ width: 'auto', height: 'auto' }}
                     >
-                      <Image
-                        src={selectedArtwork.imageUrl}
-                        alt={selectedArtwork.title}
-                        width={800}
-                        height={600}
-                        className="object-contain"
-                        priority
-                      />
+                      <div className={`relative transition-transform duration-300 ${
+                        isZoomed ? 'scale-150' : 'hover:scale-105'
+                      }`}>
+                        <img
+                          src={selectedArtwork.imageUrl}
+                          alt={selectedArtwork.title}
+                          className="object-contain max-w-full max-h-[70vh] lg:max-h-[85vh]"
+                          style={{ maxWidth: '100%', maxHeight: '100%' }}
+                        />
+                      </div>
                     </motion.div>
                     
                     {/* Zoom Controls */}
