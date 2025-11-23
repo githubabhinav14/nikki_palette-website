@@ -223,12 +223,59 @@ function GallerySection() {
   const fetchArtworks = async () => {
     setLoading(true);
     try {
+      // Try to fetch from API first
       const response = await fetch('/api/artworks');
       const data = await response.json();
-      setArtworks(data.data || []);
-      setFilteredArtworks(data.data || []);
+      if (data.data && data.data.length > 0) {
+        setArtworks(data.data);
+        setFilteredArtworks(data.data);
+      } else {
+        // Fallback to local artwork data
+        throw new Error('No data from API');
+      }
     } catch (error) {
-      console.error('Error fetching artworks:', error);
+      console.log('Using local artwork data');
+      // Load local artwork data
+      try {
+        const response = await fetch('/images/artworks/artwork-data.json');
+        const localData = await response.json();
+        setArtworks(localData);
+        setFilteredArtworks(localData);
+      } catch (localError) {
+        console.error('Error loading local artwork data:', localError);
+        // Final fallback - create basic artwork entries from image files
+        const fallbackArtworks = [
+          {
+            id: 'artwork-1',
+            title: 'Vibrant Portrait Study',
+            description: 'A colorful portrait exploring light and shadow',
+            category: 'portraits',
+            imageUrl: '/images/artworks/IMG-20220901-WA0035.jpg',
+            createdAt: '2022-09-01T00:00:00.000Z',
+            medium: 'Digital Art'
+          },
+          {
+            id: 'artwork-2',
+            title: 'Modern Character Design',
+            description: 'Contemporary character with bold colors',
+            category: 'digital',
+            imageUrl: '/images/artworks/IMG-20250730-WA0001.jpg',
+            createdAt: '2025-07-30T00:00:00.000Z',
+            medium: 'Digital Illustration'
+          },
+          {
+            id: 'artwork-3',
+            title: 'Nature Inspired Portrait',
+            description: 'Portrait with natural elements and soft tones',
+            category: 'portraits',
+            imageUrl: '/images/artworks/IMG_20210522_143723.jpg',
+            createdAt: '2021-05-22T00:00:00.000Z',
+            medium: 'Pencil and Digital'
+          }
+        ];
+        setArtworks(fallbackArtworks);
+        setFilteredArtworks(fallbackArtworks);
+      }
     }
     setLoading(false);
   };
@@ -384,10 +431,12 @@ function GallerySection() {
                 onClick={() => handleArtworkSelect(artwork)}
               >
                 <div className="aspect-square overflow-hidden">
-                  <img
+                  <Image
                     src={artwork.imageUrl}
                     alt={artwork.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     loading="lazy"
                   />
                 </div>
@@ -463,11 +512,9 @@ function GallerySection() {
                 <div className="flex flex-col lg:flex-row">
                   {/* Image Container */}
                   <div className="flex-1 bg-black flex items-center justify-center p-4 lg:p-8 relative overflow-hidden">
-                    <motion.img
+                    <motion.div
                       key={selectedArtwork.id}
-                      src={selectedArtwork.imageUrl}
-                      alt={selectedArtwork.title}
-                      className={`max-w-full max-h-[60vh] lg:max-h-[80vh] object-contain cursor-zoom-in transition-transform duration-300 ${
+                      className={`relative max-w-full max-h-[60vh] lg:max-h-[80vh] cursor-zoom-in transition-transform duration-300 ${
                         isZoomed ? 'scale-150 cursor-zoom-out' : 'hover:scale-105'
                       }`}
                       onClick={() => setIsZoomed(!isZoomed)}
@@ -475,7 +522,17 @@ function GallerySection() {
                       animate={{ opacity: 1, scale: isZoomed ? 1.5 : 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
                       transition={{ duration: 0.3 }}
-                    />
+                      style={{ width: 'auto', height: 'auto' }}
+                    >
+                      <Image
+                        src={selectedArtwork.imageUrl}
+                        alt={selectedArtwork.title}
+                        width={800}
+                        height={600}
+                        className="object-contain"
+                        priority
+                      />
+                    </motion.div>
                     
                     {/* Zoom Controls */}
                     <div className="absolute bottom-4 right-4 flex gap-2 z-10">
@@ -706,7 +763,7 @@ function AboutSection() {
                 <div className="lg:col-span-2">
                   <div className="relative rounded-2xl shadow-2xl w-full h-64 overflow-hidden">
                     <Image
-                      src="/images/gallery/placeholder-gallery.jpg"
+                      src="/images/artworks/IMG_20221110_183351_400.jpg"
                       alt="Artist workspace with paintings and creative tools"
                       fill
                       className="object-cover"

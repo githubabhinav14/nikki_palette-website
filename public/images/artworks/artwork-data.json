@@ -1,0 +1,262 @@
+[
+  {
+    "id": "artwork-1",
+    "title": "Vibrant Portrait Study",
+    "description": "A colorful portrait exploring light and shadow",
+    "category": "portraits",
+    "imageUrl": "/images/artworks/IMG-20220901-WA0035.jpg",
+    "createdAt": "2022-09-01T00:00:00.000Z",
+    "medium": "Digital Art",
+    "dimensions": "A4"
+  },
+  {
+    "id": "artwork-2",
+    "title": "Modern Character Design",
+    "description": "Contemporary character with bold colors",
+    "category": "digital",
+    "imageUrl": "/images/artworks/IMG-20250730-WA0001.jpg",
+    "createdAt": "2025-07-30T00:00:00.000Z",
+    "medium": "Digital Illustration",
+    "dimensions": "Digital"
+  },
+  {
+    "id": "artwork-3",
+    "title": "Nature Inspired Portrait",
+    "description": "Portrait with natural elements and soft tones",
+    "category": "portraits",
+    "imageUrl": "/images/artworks/IMG_20210522_143723.jpg",
+    "createdAt": "2021-05-22T00:00:00.000Z",
+    "medium": "Pencil and Digital",
+    "dimensions": "A3"
+  },
+  {
+    "id": "artwork-4",
+    "title": "Expressive Character Study",
+    "description": "Character with emotional depth and expression",
+    "category": "sketches",
+    "imageUrl": "/images/artworks/IMG_20210617_171832_027.jpg",
+    "createdAt": "2021-06-17T00:00:00.000Z",
+    "medium": "Digital Sketch",
+    "dimensions": "Digital"
+  },
+  {
+    "id": "artwork-5",
+    "title": "Colorful Illustration",
+    "description": "Vibrant illustration with dynamic composition",
+    "category": "digital",
+    "imageUrl": "/images/artworks/IMG_20220131_152556-02.jpeg",
+    "createdAt": "2022-01-31T00:00:00.000Z",
+    "medium": "Digital Art",
+    "dimensions": "Digital"
+  },
+  {
+    "id": "artwork-6",
+    "title": "Portrait with Flowers",
+    "description": "Beautiful portrait enhanced with floral elements",
+    "category": "portraits",
+    "imageUrl": "/images/artworks/IMG_20220330_142352.jpg",
+    "createdAt": "2022-03-30T00:00:00.000Z",
+    "medium": "Digital Painting",
+    "dimensions": "A4"
+  },
+  {
+    "id": "artwork-7",
+    "title": "Creative Character Design",
+    "description": "Unique character with imaginative details",
+    "category": "digital",
+    "imageUrl": "/images/artworks/IMG_20220604_160829_107.jpg",
+    "createdAt": "2022-06-04T00:00:00.000Z",
+    "medium": "Digital Illustration",
+    "dimensions": "Digital"
+  },
+  {
+    "id": "artwork-8",
+    "title": "Artistic Expression",
+    "description": "Creative piece showing artistic style and technique",
+    "category": "paintings",
+    "imageUrl": "/images/artworks/IMG_20220604_201440_113.jpg",
+    "createdAt": "2022-06-04T00:00:00.000Z",
+    "medium": "Digital Art",
+    "dimensions": "Square Format"
+  },
+  {
+    "id": "artwork-9",
+    "title": "Detailed Character Portrait",
+    "description": "Intricate character portrait with fine details",
+    "category": "portraits",
+    "imageUrl": "/images/artworks/IMG_20220604_201511_382.jpg",
+    "createdAt": "2022-06-04T00:00:00.000Z",
+    "medium": "Digital Painting",
+    "dimensions": "Portrait Format"
+  },
+  {
+    "id": "artwork-10",
+    "title": "Modern Art Style",
+    "description": "Contemporary art piece with modern aesthetics",
+    "category": "digital",
+    "imageUrl": "/images/artworks/IMG_20221022_135924.jpg",
+    "createdAt": "2022-10-22T00:00:00.000Z",
+    "medium": "Digital Art",
+    "dimensions": "Digital"
+  },
+  {
+    "id": "artwork-11",
+    "title": "Colorful Character Study",
+    "description": "Character study with vibrant color palette",
+    "category": "digital",
+    "imageUrl": "/images/artworks/IMG_20221022_140441.jpg",
+    "createdAt": "2022-10-22T00:00:00.000Z",
+    "medium": "Digital Illustration",
+    "dimensions": "Digital"
+  },
+  {
+    "id": "artwork-12",
+    "title": "Expressive Portrait",
+    "description": "Portrait capturing emotion and personality",
+    "category": "portraits",
+    "imageUrl": "/images/artworks/IMG_20221022_142121.jpg",
+    "createdAt": "2022-10-22T00:00:00.000Z",
+    "medium": "Digital Portrait",
+    "dimensions": "A4"
+  },
+  {
+    "id": "artwork-13",
+    "title": "Creative Illustration",
+    "description": "Illustration showcasing creative concepts",
+    "category": "digital",
+    "imageUrl": "/images/artworks/IMG_20221022_144905.jpg",
+    "createdAt": "2022-10-22T00:00:00.000Z",
+    "medium": "Digital Art",
+    "dimensions": "Square"
+  },
+  {
+    "id": "artwork-14",
+    "title": "Artistic Portrait",
+    "description": "Portrait with artistic interpretation and style",
+    "category": "portraits",
+    "imageUrl": "/images/artworks/IMG_20221022_145856.jpg",
+    "createdAt": "2022-10-22T00:00:00.000Z",
+    "medium": "Digital Painting",
+    "dimensions": "Portrait"
+  },
+  {
+    "id": "artwork-15",
+    "title": "Character Concept Art",
+    "description": "Concept art for character development",
+    "category": "digital",
+    "imageUrl": "/images/artworks/IMG_20221106_125129_724.jpg",
+    "createdAt": "2022-11-06T00:00:00.000Z",
+    "medium": "Concept Art",
+    "dimensions": "Digital"
+  },
+  {
+    "id": "artwork-16",
+    "title": "Modern Portrait Style",
+    "description": "Contemporary portrait with modern artistic approach",
+    "category": "portraits",
+    "imageUrl": "/images/artworks/IMG_20221106_171120_582.jpg",
+    "createdAt": "2022-11-06T00:00:00.000Z",
+    "medium": "Digital Art",
+    "dimensions": "A3"
+  },
+  {
+    "id": "artwork-17",
+    "title": "Creative Expression",
+    "description": "Artistic expression through digital medium",
+    "category": "digital",
+    "imageUrl": "/images/artworks/IMG_20221106_191620_625.jpg",
+    "createdAt": "2022-11-06T00:00:00.000Z",
+    "medium": "Digital Creation",
+    "dimensions": "Flexible"
+  },
+  {
+    "id": "artwork-18",
+    "title": "Detailed Illustration",
+    "description": "Highly detailed illustration with intricate elements",
+    "category": "digital",
+    "imageUrl": "/images/artworks/IMG_20221107_173133_545.jpg",
+    "createdAt": "2022-11-07T00:00:00.000Z",
+    "medium": "Digital Illustration",
+    "dimensions": "High Resolution"
+  },
+  {
+    "id": "artwork-19",
+    "title": "Artistic Character",
+    "description": "Character design with artistic flair and creativity",
+    "category": "digital",
+    "imageUrl": "/images/artworks/IMG_20221108_193022_059.jpg",
+    "createdAt": "2022-11-08T00:00:00.000Z",
+    "medium": "Character Art",
+    "dimensions": "Character Sheet"
+  },
+  {
+    "id": "artwork-20",
+    "title": "Portrait with Style",
+    "description": "Stylized portrait with unique artistic interpretation",
+    "category": "portraits",
+    "imageUrl": "/images/artworks/IMG_20221109_185234_818.jpg",
+    "createdAt": "2022-11-09T00:00:00.000Z",
+    "medium": "Stylized Portrait",
+    "dimensions": "Portrait Format"
+  },
+  {
+    "id": "artwork-21",
+    "title": "Creative Portrait Art",
+    "description": "Portrait art with creative and imaginative elements",
+    "category": "portraits",
+    "imageUrl": "/images/artworks/IMG_20221110_183351_400.jpg",
+    "createdAt": "2022-11-10T00:00:00.000Z",
+    "medium": "Creative Portrait",
+    "dimensions": "A4 Portrait"
+  },
+  {
+    "id": "artwork-22",
+    "title": "Modern Digital Art",
+    "description": "Contemporary digital art with modern techniques",
+    "category": "digital",
+    "imageUrl": "/images/artworks/IMG_20221123_220753_842.jpg",
+    "createdAt": "2022-11-23T00:00:00.000Z",
+    "medium": "Digital Art",
+    "dimensions": "Digital Canvas"
+  },
+  {
+    "id": "artwork-23",
+    "title": "Artistic Creation",
+    "description": "Original artistic creation with personal style",
+    "category": "paintings",
+    "imageUrl": "/images/artworks/IMG_20221201_160135-02.jpeg",
+    "createdAt": "2022-12-01T00:00:00.000Z",
+    "medium": "Digital Painting",
+    "dimensions": "Square Format"
+  },
+  {
+    "id": "artwork-24",
+    "title": "Character Portrait",
+    "description": "Character-focused portrait with personality",
+    "category": "portraits",
+    "imageUrl": "/images/artworks/IMG_20221206_131854.jpg",
+    "createdAt": "2022-12-06T00:00:00.000Z",
+    "medium": "Character Portrait",
+    "dimensions": "Character Focus"
+  },
+  {
+    "id": "artwork-25",
+    "title": "Recent Digital Art",
+    "description": "Latest digital art showcasing current skills",
+    "category": "digital",
+    "imageUrl": "/images/artworks/IMG_20250627_170931.jpg",
+    "createdAt": "2025-06-27T00:00:00.000Z",
+    "medium": "Digital Artwork",
+    "dimensions": "Recent Work"
+  },
+  {
+    "id": "artwork-26",
+    "title": "Contemporary Piece",
+    "description": "Contemporary art piece with modern aesthetics",
+    "category": "digital",
+    "imageUrl": "/images/artworks/IMG_20250627_171615.jpg",
+    "createdAt": "2025-06-27T00:00:00.000Z",
+    "medium": "Contemporary Digital",
+    "dimensions": "Modern Format"
+  }
+]
