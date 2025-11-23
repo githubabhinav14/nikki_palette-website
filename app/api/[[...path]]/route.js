@@ -136,12 +136,12 @@ export async function GET(request) {
         // Send welcome email (optional)
         try {
           await resend.emails.send({
-            from: 'Alex Artiste <noreply@alexartiste.com>',
+            from: 'Nikki Palette <noreply@nikkipalette.com>',
             to: email,
-            subject: 'Welcome to Alex Artiste Newsletter!',
+            subject: 'Welcome to Nikki Palette Newsletter!',
             html: `
               <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                <h2 style="color: #D4AF37;">Welcome to Alex Artiste Newsletter!</h2>
+                <h2 style="color: #D4AF37;">Welcome to Nikki Palette Newsletter!</h2>
                 <p>Thank you for subscribing to our newsletter. You'll receive updates on:</p>
                 <ul>
                   <li>New artwork releases</li>
@@ -150,7 +150,7 @@ export async function GET(request) {
                   <li>Special offers and commission opportunities</li>
                 </ul>
                 <p>We look forward to sharing our artistic journey with you!</p>
-                <p style="color: #666;">Best regards,<br>Alex Artiste</p>
+                <p style="color: #666;">Best regards,<br>Nikkitha</p>
               </div>
             `,
           });
@@ -411,7 +411,7 @@ export async function POST(request) {
           const emailData = {
             from: 'commissions@alexartiste.com',
             to: commission.email,
-            subject: 'Commission Request Received - Alex Artiste',
+            subject: 'Commission Request Received - Nikki Palette',
             html: `
               <h2>Thank you for your commission request!</h2>
               <p>Dear ${commission.name},</p>
@@ -423,7 +423,7 @@ export async function POST(request) {
                 <li>Size: ${commission.size || 'Not specified'}</li>
                 <li>Deadline: ${commission.deadline || 'Not specified'}</li>
               </ul>
-              <p>Best regards,<br>Alex Artiste</p>
+              <p>Best regards,<br>Nikkitha</p>
             `,
           };
           
@@ -432,7 +432,7 @@ export async function POST(request) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              name: 'Alex Artiste',
+              name: 'Nikkitha',
               email: 'noreply@alexartiste.com',
               message: `Commission request received from ${commission.name} (${commission.email}) for ${commission.serviceType}`,
               ...emailData
@@ -510,7 +510,7 @@ export async function initializeData() {
 
   // Sample testimonials
   const testimonials = [
-    { id: uuidv4(), name: 'Sarah Johnson', message: 'Alex created the most beautiful portrait of my family. The attention to detail was incredible!', rating: 5, createdAt: new Date().toISOString() },
+    { id: uuidv4(), name: 'Sarah Johnson', message: 'Nikkitha created the most beautiful portrait of my family. The attention to detail was incredible!', rating: 5, createdAt: new Date().toISOString() },
     { id: uuidv4(), name: 'Michael Chen', message: 'The t-shirt designs are amazing! My business has received so many compliments.', rating: 5, createdAt: new Date().toISOString() },
     { id: uuidv4(), name: 'Emily Rodriguez', message: 'Professional, creative, and delivered on time. Highly recommend!', rating: 5, createdAt: new Date().toISOString() },
   ];

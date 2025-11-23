@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Star, ChevronDown, Plus, Minus, Sparkles, Palette, Brush, Mail, Phone, Instagram, MessageCircle } from 'lucide-react';
+import { X, Star, ChevronDown, Plus, Minus, Sparkles, Palette, Brush, Paintbrush, Mail, Phone, Instagram, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -44,7 +44,7 @@ function HeroSection() {
             backgroundImage: 'url(https://images.unsplash.com/photo-1634986666676-ec8fd927c23d)',
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/70 to-black/80 dark:from-black/90 dark:via-black/80 dark:to-black/90" />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/70 to-black/80" />
       </div>
 
       {/* Content */}
@@ -69,7 +69,7 @@ function HeroSection() {
           transition={{ delay: 0.2, duration: 0.8 }}
           className="text-5xl md:text-7xl font-playfair font-bold text-white mb-6"
         >
-          Alex Artiste
+          Nikki Palette
         </motion.h1>
 
         <motion.p
@@ -129,7 +129,6 @@ function HeroSection() {
 function GallerySection() {
   const [artworks, setArtworks] = useState([]);
   const [filteredArtworks, setFilteredArtworks] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedArtwork, setSelectedArtwork] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('newest');
@@ -137,18 +136,9 @@ function GallerySection() {
   const [isZoomed, setIsZoomed] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const categories = [
-    { id: 'all', label: 'All Works' },
-    { id: 'portraits', label: 'Portraits' },
-    { id: 'tshirt', label: 'T-Shirt Art' },
-    { id: 'paintings', label: 'Paintings' },
-    { id: 'sketches', label: 'Sketches' },
-    { id: 'digital', label: 'Digital Art' },
-  ];
-
   useEffect(() => {
     fetchArtworks();
-  }, [selectedCategory]);
+  }, []);
 
   useEffect(() => {
     filterAndSortArtworks();
@@ -191,10 +181,7 @@ function GallerySection() {
   const fetchArtworks = async () => {
     setLoading(true);
     try {
-      const url = selectedCategory === 'all' 
-        ? '/api/artworks' 
-        : `/api/artworks?category=${selectedCategory}`;
-      const response = await fetch(url);
+      const response = await fetch('/api/artworks');
       const data = await response.json();
       setArtworks(data.data || []);
       setFilteredArtworks(data.data || []);
@@ -268,7 +255,7 @@ function GallerySection() {
           </p>
         </motion.div>
 
-        {/* Category Filters */}
+        {/* Search and Sort Controls */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -276,7 +263,7 @@ function GallerySection() {
           viewport={{ once: true }}
           className="flex flex-wrap justify-center gap-3 mb-12"
         >
-          {/* Search and Filter Controls */}
+          {/* Search and Sort Controls */}
           <div className="w-full max-w-4xl mb-8 space-y-4">
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="relative flex-1">
@@ -301,7 +288,6 @@ function GallerySection() {
                 <option value="newest">Newest First</option>
                 <option value="oldest">Oldest First</option>
                 <option value="title">Title A-Z</option>
-                <option value="category">Category</option>
               </select>
             </div>
             
@@ -314,19 +300,6 @@ function GallerySection() {
               )}
             </div>
           </div>
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
-              className={`px-6 py-2 rounded-full font-medium transition-all ${
-                selectedCategory === category.id
-                  ? 'bg-primary text-primary-foreground shadow-lg'
-                  : 'bg-background text-foreground hover:bg-muted'
-              }`}
-            >
-              {category.label}
-            </button>
-          ))}
         </motion.div>
 
         {/* Gallery Grid */}
@@ -340,18 +313,17 @@ function GallerySection() {
               {searchTerm ? (
                 <span>No artworks found matching "{searchTerm}"</span>
               ) : (
-                <span>No artworks found in this category</span>
+                <span>No artworks found</span>
               )}
             </div>
-            <Button 
-              onClick={() => {
-                setSearchTerm('');
-                setSelectedCategory('all');
-              }}
-              variant="outline"
-            >
-              Clear Filters
-            </Button>
+            {searchTerm && (
+              <Button 
+                onClick={() => setSearchTerm('')}
+                variant="outline"
+              >
+                Clear Search
+              </Button>
+            )}
           </div>
         ) : (
           <motion.div
@@ -573,12 +545,16 @@ function AboutSection() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
+            className="relative"
           >
             <img
-              src="https://images.unsplash.com/photo-1692859532235-c93fa73bd5d0"
-              alt="Artist workspace"
-              className="rounded-2xl shadow-2xl"
+              src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&h=500&fit=crop&crop=face"
+              alt="Nikkitha - Artist Profile"
+              className="rounded-2xl shadow-2xl w-full h-auto object-cover"
             />
+            <div className="absolute -bottom-4 -right-4 bg-gold-600 text-white p-4 rounded-full shadow-lg">
+              <Paintbrush className="w-6 h-6" />
+            </div>
           </motion.div>
 
           <motion.div
@@ -591,7 +567,7 @@ function AboutSection() {
               About the Artist
             </h2>
             <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-              Hello! I'm <span className="text-gold-600 font-semibold">Alex Artiste</span>, a passionate artist based in New York City. 
+              Hello! I'm <span className="text-gold-600 font-semibold">Nikkitha</span>, a passionate artist based in New York City. 
               My journey in art began with a simple pencil and paper, and has evolved into a lifelong commitment to bringing visions to life 
               through diverse mediums.
             </p>

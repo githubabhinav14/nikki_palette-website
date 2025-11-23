@@ -12,8 +12,8 @@ import {
 import { toast } from 'sonner';
 
 export function ShareButtons({ 
-  title = 'Alex Artiste - Professional Artist Portfolio',
-  description = 'Check out this amazing artwork from Alex Artiste!',
+  title = 'Nikki Palette - Professional Artist Portfolio',
+  description = 'Check out this amazing artwork from Nikkitha!',
   url = typeof window !== 'undefined' ? window.location.href : '',
   image = '',
   size = 'default',
@@ -34,7 +34,7 @@ export function ShareButtons({
 
   const shareOnInstagram = () => {
     // Instagram doesn't have a direct share URL, so we'll copy to clipboard with Instagram mention
-    const text = `Check out this amazing artwork from Alex Artiste! 🎨\n\n${description}\n\nView more: ${url}\n\n#art #artist #customart #commission #alexartiste`;
+    const text = `Check out this amazing artwork from Nikkitha! 🎨\n\n${description}\n\nView more: ${url}\n\n#art #artist #customart #commission #nikkipalette`;
     navigator.clipboard.writeText(text);
     toast.success('Instagram caption copied to clipboard!');
   };
@@ -57,7 +57,7 @@ export function ShareButtons({
 
   const shareViaEmail = () => {
     const subject = encodeURIComponent(title);
-    const body = encodeURIComponent(`I thought you might be interested in this artwork by Alex Artiste:
+    const body = encodeURIComponent(`I thought you might be interested in this artwork by Nikkitha:
 
 ${description}
 
@@ -135,7 +135,7 @@ View it here: ${url}`);
 }
 
 export function ShareDropdown({ 
-  title = 'Alex Artiste - Professional Artist Portfolio',
+  title = 'Nikki Palette - Professional Artist Portfolio',
   description = 'Check out this amazing artwork!',
   url = typeof window !== 'undefined' ? window.location.href : '',
   image = ''

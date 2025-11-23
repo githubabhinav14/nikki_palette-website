@@ -9,11 +9,11 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' });
 
 export const metadata = {
-  title: 'Alex Artiste | Professional Artist Portfolio',
+  title: 'Nikki Palette | Professional Artist Portfolio',
   description: 'Artist specializing in custom portraits, paintings, t-shirt art, sketches, and digital art. Based in New York City. Commission custom artwork today.',
   keywords: 'artist, portrait artist, custom paintings, t-shirt design, digital art, sketches, New York artist, art commissions',
   openGraph: {
-    title: 'Alex Artiste | Professional Artist Portfolio',
+    title: 'Nikki Palette | Professional Artist Portfolio',
     description: 'Passionate artist bringing visions to life through diverse mediums',
     type: 'website',
   },
@@ -40,7 +40,7 @@ function Navigation() {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             <a href="#home" className="text-2xl font-playfair font-bold text-gold-600 hover:text-gold-700 transition-colors">
-              Alex Artiste
+              Nikki Palette
             </a>
             
             <div className="hidden md:flex items-center gap-8">
@@ -89,7 +89,7 @@ function Footer() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
-            <h3 className="text-2xl font-playfair font-bold text-gold-400 mb-4">Alex Artiste</h3>
+            <h3 className="text-2xl font-playfair font-bold text-gold-400 mb-4">Nikkitha</h3>
             <p className="text-cream-300 text-sm">
               Passionate artist bringing visions to life through diverse mediums, inspired by nature and human emotion.
             </p>
@@ -134,7 +134,7 @@ function Footer() {
         <div className="border-t border-cream-700 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-cream-400 text-sm">
-              &copy; {new Date().getFullYear()} Alex Artiste. All rights reserved.
+              &copy; {new Date().getFullYear()} Nikki Palette. All rights reserved.
             </p>
             <div className="flex gap-4">
               <a href="https://instagram.com/MyArtGallery" target="_blank" rel="noopener noreferrer" className="text-cream-400 hover:text-gold-400 transition-colors">
