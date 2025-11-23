@@ -1,7 +1,8 @@
 import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
-import { Instagram, Mail, Phone, Menu, X } from 'lucide-react';
+import { Instagram, Mail, Phone } from 'lucide-react';
 import { NewsletterSubscription } from '@/components/newsletter';
+import Navigation from '@/components/navigation';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' });
@@ -29,54 +30,7 @@ export default function RootLayout({ children }) {
   );
 }
 
-function Navigation() {
-  return (
-    <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-cream-50/95 backdrop-blur-sm border-b border-cream-200 shadow-sm">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
-            <a href="#home" className="text-2xl font-playfair font-bold text-gold-600 hover:text-gold-700 transition-colors">
-              Nikki Palette
-            </a>
-            
-            <div className="hidden md:flex items-center gap-8">
-              <a href="#home" className="text-sm font-medium text-foreground hover:text-gold-600 transition-colors">
-                Home
-              </a>
-              <a href="#gallery" className="text-sm font-medium text-foreground hover:text-gold-600 transition-colors">
-                Gallery
-              </a>
-              <a href="#about" className="text-sm font-medium text-foreground hover:text-gold-600 transition-colors">
-                About
-              </a>
-              <a href="#services" className="text-sm font-medium text-foreground hover:text-gold-600 transition-colors">
-                Services
-              </a>
-              <a href="#testimonials" className="text-sm font-medium text-foreground hover:text-gold-600 transition-colors">
-                Testimonials
-              </a>
-              <a href="#blog" className="text-sm font-medium text-foreground hover:text-gold-600 transition-colors">
-                Blog
-              </a>
-              <a href="#contact" className="px-6 py-2 bg-gold-600 text-white rounded-full hover:bg-gold-700 transition-all hover:shadow-lg font-medium">
-                Contact
-              </a>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button className="md:hidden p-2 text-foreground hover:text-gold-600">
-                <Menu size={24} />
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
-      
-      {/* Mobile spacer */}
-      <div className="h-16"></div>
-    </>
-  );
-}
+ 
 
 function Footer() {
   return (
