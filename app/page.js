@@ -3,10 +3,10 @@
 import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Star, ChevronDown, Plus, Minus, Sparkles, Palette, Brush, Paintbrush, Mail, Phone, Instagram, MessageCircle } from 'lucide-react';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+
 import { Textarea } from '@/components/ui/textarea';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
@@ -172,7 +172,6 @@ function GallerySection() {
   const [artworks, setArtworks] = useState([]);
   const [filteredArtworks, setFilteredArtworks] = useState([]);
   const [selectedArtwork, setSelectedArtwork] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('newest');
   const [loading, setLoading] = useState(true);
   const [isZoomed, setIsZoomed] = useState(false);
@@ -184,20 +183,10 @@ function GallerySection() {
 
   useEffect(() => {
     filterAndSortArtworks();
-  }, [artworks, searchTerm, sortBy]);
+  }, [artworks, sortBy]);
 
   const filterAndSortArtworks = () => {
     let filtered = [...artworks];
-    
-    // Filter by search term
-    if (searchTerm.trim()) {
-      const searchLower = searchTerm.toLowerCase().trim();
-      filtered = filtered.filter(artwork => 
-        artwork.title.toLowerCase().includes(searchLower) ||
-        (artwork.description && artwork.description.toLowerCase().includes(searchLower)) ||
-        artwork.category.toLowerCase().includes(searchLower)
-      );
-    }
     
     // Sort artworks
     switch (sortBy) {
@@ -231,7 +220,6 @@ function GallerySection() {
       'IMG_20210522_143723.jpg',
       'IMG_20210617_171832_027.jpg',
       'IMG_20220131_152556-02.jpeg',
-      'IMG_20220330_142352.jpg',
       'IMG_20220604_160829_107.jpg',
       'IMG_20220604_201440_113.jpg',
       'IMG_20220604_201511_382.jpg',
@@ -252,7 +240,6 @@ function GallerySection() {
       'IMG_20221201_160135-02.jpeg',
       'IMG_20221206_131854.jpg',
       'IMG_20221206_135402-04.jpeg',
-      'IMG_20221209_113804.jpg',
       'IMG_20250224_161335.jpg',
       'IMG_20250325_211821.jpg',
       'IMG_20250627_170931.jpg',
@@ -351,23 +338,9 @@ function GallerySection() {
           viewport={{ once: true }}
           className="flex flex-wrap justify-center gap-3 mb-12"
         >
-          {/* Search and Sort Controls */}
-          <div className="w-full max-w-4xl mb-8 space-y-4">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="relative flex-1">
-                <Input
-                  type="text"
-                  placeholder="Search artworks by title, description, or category..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-3 w-full"
-                />
-                <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                  <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </div>
-              </div>
+          {/* Sort Controls */}
+          <div className="w-full max-w-4xl mb-8">
+            <div className="flex justify-center">
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
@@ -380,12 +353,8 @@ function GallerySection() {
             </div>
             
             {/* Results Counter */}
-            <div className="text-center text-muted-foreground">
-              {searchTerm ? (
-                <span>Found {filteredArtworks.length} artwork{filteredArtworks.length !== 1 ? 's' : ''} matching "{searchTerm}"</span>
-              ) : (
-                <span>Showing {filteredArtworks.length} artwork{filteredArtworks.length !== 1 ? 's' : ''}</span>
-              )}
+            <div className="text-center text-muted-foreground mt-4">
+              <span>Showing {filteredArtworks.length} artwork{filteredArtworks.length !== 1 ? 's' : ''}</span>
             </div>
           </div>
         </motion.div>
@@ -398,20 +367,8 @@ function GallerySection() {
         ) : filteredArtworks.length === 0 ? (
           <div className="text-center py-20">
             <div className="text-muted-foreground text-lg mb-4">
-              {searchTerm ? (
-                <span>No artworks found matching "{searchTerm}"</span>
-              ) : (
-                <span>No artworks found</span>
-              )}
+              <span>No artworks found</span>
             </div>
-            {searchTerm && (
-              <Button 
-                onClick={() => setSearchTerm('')}
-                variant="outline"
-              >
-                Clear Search
-              </Button>
-            )}
           </div>
         ) : (
           <motion.div
@@ -656,14 +613,10 @@ function AboutSection() {
             <div className="relative group">
               <div className="absolute -inset-4 bg-gradient-to-r from-gold-400 to-gold-600 rounded-3xl blur-lg opacity-25 group-hover:opacity-40 transition-opacity duration-300"></div>
               <div className="relative rounded-3xl shadow-2xl w-full aspect-square border-4 border-white overflow-hidden">
-                <Image
-                  src="/images/artist/placeholder-profile.jpg"
+                <img
+                  src="/images/profile image/Profile.jpg"
                   alt="Nikkitha - Artist Profile"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 90vw, (max-width: 1200px) 50vw, 33vw"
-                  quality={90}
-                  priority
+                  className="w-full h-full object-cover"
                 />
               </div>
               <div className="absolute -bottom-6 -right-6 bg-gold-600 text-white p-4 rounded-full shadow-2xl border-4 border-white">
@@ -763,13 +716,10 @@ function AboutSection() {
                 </div>
                 <div className="lg:col-span-2">
                   <div className="relative rounded-2xl shadow-2xl w-full h-64 overflow-hidden">
-                    <Image
+                    <img
                       src="/images/artworks/IMG_20221110_183351_400.jpg"
                       alt="Artist workspace with paintings and creative tools"
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 90vw, (max-width: 1200px) 50vw, 33vw"
-                      quality={85}
+                      className="w-full h-full object-cover"
                       loading="lazy"
                     />
                   </div>
