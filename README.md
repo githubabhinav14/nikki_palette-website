@@ -1,4 +1,4 @@
-# Alex Artiste - Art Portfolio Website 🎨
+# Nikki Palette - Art Portfolio Website 🎨
 
 A beautiful, modern art portfolio website built with Next.js 14, MongoDB, and Resend email integration. Features stunning animations, responsive design, and a complete commission management system.
 
@@ -295,12 +295,16 @@ This project is open source and available for personal and commercial use.
 
 ## 👨‍🎨 Contact
 
-**Alex Artiste**
+**Nikki palette**
 - Email: nikithanarsingoju1@gmail.com
 - Phone: 7673926708
 - Instagram: @nikki_palette
-- Location: New York City
+- Location: Hyderabad
 
 ---
+Developer: Abhinav
+- Email: abhinav14221@gmail.com
+- Phone: 8985665850
+- Location: Hyderabad
 
 Built with ❤️ using Next.js, MongoDB, and Resend

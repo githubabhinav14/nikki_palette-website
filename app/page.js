@@ -384,10 +384,11 @@ function GallerySection() {
             {filteredArtworks.map((artwork, index) => (
               <motion.div
                 key={artwork.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition-all cursor-pointer bg-card"
+                initial={{ opacity: 0, y: 30, rotate: -2, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: [30, -12, 0], rotate: [-2, -1, 0], scale: [0.96, 1.02, 1] }}
+                transition={{ duration: 0.9, delay: index * 0.07, ease: 'easeOut' }}
+                viewport={{ once: true, amount: 0.2 }}
+                className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition-all cursor-pointer bg-card will-change-transform"
                 onClick={() => handleArtworkSelect(artwork)}
               >
                 <div className="aspect-square overflow-hidden">
