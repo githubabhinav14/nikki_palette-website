@@ -150,7 +150,7 @@ export async function GET(request) {
                   <li>Special offers and commission opportunities</li>
                 </ul>
                 <p>We look forward to sharing our artistic journey with you!</p>
-                <p style="color: #666;">Best regards,<br>Nikkitha</p>
+                <p style="color: #666;">Best regards,<br>Nikitha</p>
               </div>
             `,
           });
@@ -423,7 +423,7 @@ export async function POST(request) {
                 <li>Size: ${commission.size || 'Not specified'}</li>
                 <li>Deadline: ${commission.deadline || 'Not specified'}</li>
               </ul>
-              <p>Best regards,<br>Nikkitha</p>
+              <p>Best regards,<br>Nikitha</p>
             `,
           };
           
@@ -432,7 +432,7 @@ export async function POST(request) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              name: 'Nikkitha',
+              name: 'Nikitha',
               email: 'noreply@alexartiste.com',
               message: `Commission request received from ${commission.name} (${commission.email}) for ${commission.serviceType}`,
               ...emailData
@@ -510,7 +510,7 @@ export async function initializeData() {
 
   // Sample testimonials
   const testimonials = [
-    { id: uuidv4(), name: 'Sarah Johnson', message: 'Nikkitha created the most beautiful portrait of my family. The attention to detail was incredible!', rating: 5, createdAt: new Date().toISOString() },
+    { id: uuidv4(), name: 'Sarah Johnson', message: 'Nikitha created the most beautiful portrait of my family. The attention to detail was incredible!', rating: 5, createdAt: new Date().toISOString() },
     { id: uuidv4(), name: 'Michael Chen', message: 'The t-shirt designs are amazing! My business has received so many compliments.', rating: 5, createdAt: new Date().toISOString() },
     { id: uuidv4(), name: 'Emily Rodriguez', message: 'Professional, creative, and delivered on time. Highly recommend!', rating: 5, createdAt: new Date().toISOString() },
   ];

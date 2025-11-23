@@ -564,7 +564,7 @@ function AboutSection() {
               <div className="relative rounded-3xl shadow-2xl w-full aspect-square border-4 border-white overflow-hidden">
                 <img
                   src="/images/profile image/Profile.jpg"
-                  alt="Nikkitha - Artist Profile"
+                  alt="Nikitha - Artist Profile"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -586,7 +586,7 @@ function AboutSection() {
             className="lg:col-span-3 space-y-8"
           >
             <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gold-100">
-              <h3 className="text-3xl font-playfair font-bold text-gold-700 mb-4">Hello, I'm Nikkitha</h3>
+              <h3 className="text-3xl font-playfair font-bold text-gold-700 mb-4">Hello, I'm Nikitha</h3>
               <p className="text-lg text-muted-foreground mb-4 leading-relaxed">
                 A passionate artist based in Hyderabad, bringing visions to life through diverse mediums. 
                 My journey began with a simple pencil and paper, evolving into a lifelong commitment to artistic expression.
@@ -797,7 +797,7 @@ function TestimonialsSection() {
           id: 'mock-1',
           name: 'Sarah Johnson',
           rating: 5,
-          message: 'Nikkitha created the most beautiful custom portrait of my family. Her attention to detail and artistic vision exceeded all my expectations. The entire process was smooth and professional. I highly recommend her services!',
+          message: 'Nikitha created the most beautiful custom portrait of my family. Her attention to detail and artistic vision exceeded all my expectations. The entire process was smooth and professional. I highly recommend her services!',
           artworkType: 'portrait',
           createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString() // 30 days ago
         };
@@ -812,7 +812,7 @@ function TestimonialsSection() {
         id: 'mock-1',
         name: 'Sarah Johnson',
         rating: 5,
-        message: 'Nikkitha created the most beautiful custom portrait of my family. Her attention to detail and artistic vision exceeded all my expectations. The entire process was smooth and professional. I highly recommend her services!',
+        message: 'Nikitha created the most beautiful custom portrait of my family. Her attention to detail and artistic vision exceeded all my expectations. The entire process was smooth and professional. I highly recommend her services!',
         artworkType: 'portrait',
         createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString() // 30 days ago
       };
