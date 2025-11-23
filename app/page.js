@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 
 import { Textarea } from '@/components/ui/textarea';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { ShareButtons } from '@/components/social-share';
 
 // Custom debounce hook
 function useDebounce(value, delay) {
@@ -420,13 +421,13 @@ function GallerySection() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4"
-              onClick={() => setSelectedArtwork(null)}
+              
             >
               <motion.div
-                initial={{ scale: 0.9 }}
+                initial={{ scale: 0.98 }}
                 animate={{ scale: 1 }}
-                exit={{ scale: 0.9 }}
-                className="relative max-w-6xl w-full max-h-[95vh] bg-white rounded-lg overflow-hidden"
+                exit={{ scale: 0.98 }}
+                className="relative w-full h-screen overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Close Button */}
@@ -437,6 +438,30 @@ function GallerySection() {
                 >
                   <X size={28} />
                 </button>
+
+                {/* Top info strip */}
+                <div className="absolute top-0 left-0 right-0 z-20 bg-white/95 text-foreground px-4 py-3 border-b border-muted flex items-center justify-between">
+                  <div className="flex items-center gap-3 overflow-hidden">
+                    <span className="text-base font-semibold truncate">{selectedArtwork.title}</span>
+                    <span className="text-xs px-2 py-1 rounded-full bg-muted text-muted-foreground capitalize truncate">
+                      {selectedArtwork.category}
+                    </span>
+                  </div>
+                  {filteredArtworks.length > 1 && (
+                    <div className="text-xs text-muted-foreground">
+                      {currentImageIndex + 1} / {filteredArtworks.length}
+                    </div>
+                  )}
+                </div>
+
+                {/* Image only layout */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <img
+                    src={selectedArtwork.imageUrl}
+                    alt={selectedArtwork.title}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
 
                 {/* Navigation Buttons */}
                 {filteredArtworks.length > 1 && (
@@ -461,86 +486,6 @@ function GallerySection() {
                     </button>
                   </>
                 )}
-
-                {/* Image Counter */}
-                {filteredArtworks.length > 1 && (
-                  <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-20 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
-                    {currentImageIndex + 1} / {filteredArtworks.length}
-                  </div>
-                )}
-
-                <div className="flex flex-col lg:flex-row">
-                  {/* Image Container */}
-                  <div className="flex-1 bg-black flex items-center justify-center p-4 lg:p-8 relative overflow-hidden">
-                    <motion.div
-                      key={selectedArtwork.id}
-                      className={`relative w-full h-full flex items-center justify-center cursor-zoom-in ${
-                        isZoomed ? 'cursor-zoom-out' : ''
-                      }`}
-                      onClick={() => setIsZoomed(!isZoomed)}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.9 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <div className={`relative transition-transform duration-300 ${
-                        isZoomed ? 'scale-150' : 'hover:scale-105'
-                      }`}>
-                        <img
-                          src={selectedArtwork.imageUrl}
-                          alt={selectedArtwork.title}
-                          className="object-contain max-w-full max-h-[70vh] lg:max-h-[85vh]"
-                          style={{ maxWidth: '100%', maxHeight: '100%' }}
-                        />
-                      </div>
-                    </motion.div>
-                    
-                    {/* Zoom Controls */}
-                    <div className="absolute bottom-4 right-4 flex gap-2 z-10">
-                      <button
-                        onClick={() => setIsZoomed(!isZoomed)}
-                        className="bg-black/70 hover:bg-black/90 text-white p-2 rounded-full transition-all"
-                        title={isZoomed ? 'Zoom Out' : 'Zoom In'}
-                      >
-                        {isZoomed ? (
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7" />
-                          </svg>
-                        ) : (
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                          </svg>
-                        )}
-                      </button>
-                    </div>
-                  </div>
-                  <div className="w-full md:w-80 p-6">
-                    <h3 className="text-2xl font-playfair font-bold text-gold-700 mb-2">
-                      {selectedArtwork.title}
-                    </h3>
-                    <p className="text-muted-foreground mb-4 capitalize">
-                      {selectedArtwork.category}
-                    </p>
-                    {selectedArtwork.description && (
-                      <p className="text-foreground mb-6">{selectedArtwork.description}</p>
-                    )}
-                    <div className="mb-6">
-                      <ShareButtons 
-                        title={selectedArtwork.title}
-                        description={selectedArtwork.description || `Check out this amazing ${selectedArtwork.category} artwork!`}
-                        url={`${typeof window !== 'undefined' ? window.location.origin : ''}/#gallery`}
-                        image={selectedArtwork.imageUrl}
-                        size="sm"
-                        variant="outline"
-                      />
-                    </div>
-                    <a href="#contact">
-                      <Button className="w-full bg-gold-600 hover:bg-gold-700">
-                        Commission Similar Artwork
-                      </Button>
-                    </a>
-                  </div>
-                </div>
               </motion.div>
             </motion.div>
           )}
