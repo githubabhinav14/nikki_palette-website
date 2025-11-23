@@ -223,7 +223,6 @@ function GallerySection() {
       'IMG_20220604_160829_107.jpg',
       'IMG_20220604_201440_113.jpg',
       'IMG_20220604_201511_382.jpg',
-      'IMG_20221022_135924.jpg',
       'IMG_20221022_140441.jpg',
       'IMG_20221022_142121.jpg',
       'IMG_20221022_144905.jpg',
@@ -235,12 +234,12 @@ function GallerySection() {
       'IMG_20221108_193022_059.jpg',
       'IMG_20221109_185234_818.jpg',
       'IMG_20221110_183351_400.jpg',
+      'IMG_20221206_131854.jpg',
+      'IMG_20221022_135924.jpg',
       'IMG_20221121_181921_925.jpg',
       'IMG_20221123_220753_842.jpg',
       'IMG_20221201_160135-02.jpeg',
-      'IMG_20221206_131854.jpg',
       'IMG_20221206_135402-04.jpeg',
-      'IMG_20250224_161335.jpg',
       'IMG_20250325_211821.jpg',
       'IMG_20250627_170931.jpg',
       'IMG_20250627_171343.jpg',
@@ -639,7 +638,7 @@ function AboutSection() {
             <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gold-100">
               <h3 className="text-3xl font-playfair font-bold text-gold-700 mb-4">Hello, I'm Nikkitha</h3>
               <p className="text-lg text-muted-foreground mb-4 leading-relaxed">
-                A passionate artist based in New York City, bringing visions to life through diverse mediums. 
+                A passionate artist based in Hyderabad, bringing visions to life through diverse mediums. 
                 My journey began with a simple pencil and paper, evolving into a lifelong commitment to artistic expression.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
@@ -1299,7 +1298,7 @@ function ContactSection() {
                   📍 Location
                 </h3>
                 <p className="text-foreground">
-                  Based in <span className="font-semibold">New York City</span>
+                  Based in <span className="font-semibold">Hyderabad</span>
                 </p>
                 <p className="text-sm text-muted-foreground mt-2">
                   Available for local meetings and worldwide shipping

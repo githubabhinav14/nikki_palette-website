@@ -34,28 +34,6 @@ const testimonials = [
     wouldRecommend: true,
     status: 'approved',
     createdAt: '2025-11-22T15:25:27.644Z'
-  },
-  {
-    id: '4',
-    name: 'David Thompson',
-    email: 'd.thompson@email.com',
-    message: 'The digital art piece I commissioned is stunning. The level of detail and creativity is beyond what I imagined. Will definitely be back for more!',
-    rating: 5,
-    artworkType: 'Digital Art',
-    wouldRecommend: true,
-    status: 'approved',
-    createdAt: '2025-11-22T15:25:27.644Z'
-  },
-  {
-    id: '5',
-    name: 'Lisa Park',
-    email: 'lisa.p@email.com',
-    message: 'Amazing sketch work! The portrait of my pet is so lifelike and captures their essence perfectly. Thank you for such a wonderful piece of art.',
-    rating: 5,
-    artworkType: 'Sketch',
-    wouldRecommend: true,
-    status: 'approved',
-    createdAt: '2025-11-22T15:25:27.644Z'
   }
 ];
 

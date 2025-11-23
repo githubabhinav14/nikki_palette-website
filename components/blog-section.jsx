@@ -32,10 +32,24 @@ export function BlogSection() {
     try {
       const response = await fetch('/api/blog')
       const data = await response.json()
-      setBlogPosts(data.data || [])
+      // Map API data to component format
+      const mappedPosts = (data.data || []).map(post => ({
+        id: post._id,
+        title: post.title,
+        excerpt: post.excerpt,
+        content: post.content,
+        category: post.tags[0] || 'techniques',
+        author: post.author,
+        imageUrl: post.featuredImage,
+        readTime: post.readTime,
+        tags: post.tags,
+        createdAt: post.publishedAt,
+        slug: post.slug
+      }))
+      setBlogPosts(mappedPosts)
     } catch (error) {
       console.error('Error fetching blog posts:', error)
-      // Enhanced mock blog posts for better visual appeal
+      // Fallback mock blog posts for better visual appeal
       setBlogPosts([
         {
           id: '1',

@@ -8,8 +8,8 @@ const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfa
 
 export const metadata = {
   title: 'Nikki Palette | Professional Artist Portfolio',
-  description: 'Artist specializing in custom portraits, paintings, t-shirt art, sketches, and digital art. Based in New York City. Commission custom artwork today.',
-  keywords: 'artist, portrait artist, custom paintings, t-shirt design, digital art, sketches, New York artist, art commissions',
+  description: 'Artist specializing in custom portraits, paintings, t-shirt art, sketches, and digital art. Based in Hyderabad. Commission custom artwork today.',
+  keywords: 'artist, portrait artist, custom paintings, t-shirt design, digital art, sketches, Hyderabad artist, art commissions',
   openGraph: {
     title: 'Nikki Palette | Professional Artist Portfolio',
     description: 'Passionate artist bringing visions to life through diverse mediums',
@@ -121,7 +121,7 @@ function Footer() {
                 <Instagram size={16} />
                 @MyArtGallery
               </a>
-              <p className="text-cream-300 text-sm">📍 New York City</p>
+              <p className="text-cream-300 text-sm">📍 Hyderabad</p>
             </div>
           </div>
         </div>
