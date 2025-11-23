@@ -97,13 +97,13 @@ function HeroSection() {
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
           <a href="#gallery">
-            <Button size="lg" className="bg-gold-600 hover:bg-gold-700 text-white px-8 py-6 text-lg rounded-full shadow-xl hover:shadow-2xl transition-all">
+            <Button size="lg" className="bg-gold-600 text-white px-8 py-6 text-lg rounded-full shadow-xl">
               <Palette className="mr-2 h-5 w-5" />
               View My Work
             </Button>
           </a>
           <a href="#contact">
-            <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-gold-700 px-8 py-6 text-lg rounded-full shadow-xl transition-all">
+            <Button size="lg" variant="outline" className="border-2 border-white text-white bg-transparent px-8 py-6 text-lg rounded-full shadow-xl">
               <Brush className="mr-2 h-5 w-5" />
               Get a Custom Artwork
             </Button>
@@ -537,71 +537,146 @@ function AnalyticsSection() {
 // About Section
 function AboutSection() {
   return (
-    <section id="about" className="py-20 bg-white">
+    <section id="about" className="py-20 bg-gradient-to-br from-cream-50 to-white">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-6xl font-playfair font-bold text-gold-700 mb-4">
+            About the Artist
+          </h2>
+          <div className="w-24 h-1 bg-gold-600 mx-auto mb-4"></div>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Get to know the creative mind behind the artwork
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+          {/* Artist Profile Image - Left Side */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="relative"
+            className="lg:col-span-2 relative"
           >
-            <img
-              src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&h=500&fit=crop&crop=face"
-              alt="Nikkitha - Artist Profile"
-              className="rounded-2xl shadow-2xl w-full h-auto object-cover"
-            />
-            <div className="absolute -bottom-4 -right-4 bg-gold-600 text-white p-4 rounded-full shadow-lg">
-              <Paintbrush className="w-6 h-6" />
+            <div className="relative group">
+              <div className="absolute -inset-4 bg-gradient-to-r from-gold-400 to-gold-600 rounded-3xl blur-lg opacity-25 group-hover:opacity-40 transition-opacity duration-300"></div>
+              <img
+                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&h=500&fit=crop&crop=face"
+                alt="Nikkitha - Artist Profile"
+                className="relative rounded-3xl shadow-2xl w-full h-auto object-cover border-4 border-white"
+              />
+              <div className="absolute -bottom-6 -right-6 bg-gold-600 text-white p-4 rounded-full shadow-2xl border-4 border-white">
+                <Paintbrush className="w-8 h-8" />
+              </div>
+              <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
+                <span className="text-gold-700 font-semibold text-sm">Professional Artist</span>
+              </div>
             </div>
           </motion.div>
 
+          {/* Content - Center */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
+            className="lg:col-span-3 space-y-8"
           >
-            <h2 className="text-4xl md:text-5xl font-playfair font-bold text-gold-700 mb-6">
-              About the Artist
-            </h2>
-            <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-              Hello! I'm <span className="text-gold-600 font-semibold">Nikkitha</span>, a passionate artist based in New York City. 
-              My journey in art began with a simple pencil and paper, and has evolved into a lifelong commitment to bringing visions to life 
-              through diverse mediums.
-            </p>
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Inspired by nature and human emotion, I specialize in creating custom portraits, paintings, t-shirt designs, sketches, 
-              and digital art. Each piece I create tells a story and captures a moment in time.
-            </p>
+            <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gold-100">
+              <h3 className="text-3xl font-playfair font-bold text-gold-700 mb-4">Hello, I'm Nikkitha</h3>
+              <p className="text-lg text-muted-foreground mb-4 leading-relaxed">
+                A passionate artist based in New York City, bringing visions to life through diverse mediums. 
+                My journey began with a simple pencil and paper, evolving into a lifelong commitment to artistic expression.
+              </p>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Inspired by nature and human emotion, I specialize in creating custom portraits, paintings, 
+                t-shirt designs, sketches, and digital art. Each piece tells a unique story.
+              </p>
+            </div>
 
-            <h3 className="text-2xl font-playfair font-semibold text-gold-600 mb-4">Skills & Mediums</h3>
-            <div className="grid grid-cols-2 gap-4 mb-8">
-              {['Oil Painting', 'Digital Illustration', 'Pencil Drawing', 'Watercolor', 'Portrait Art', 'T-Shirt Design'].map((skill) => (
-                <div key={skill} className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-gold-600 rounded-full"></div>
-                  <span className="text-foreground font-medium">{skill}</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 shadow-md border border-gold-50">
+                <h4 className="text-xl font-playfair font-semibold text-gold-600 mb-4 flex items-center gap-2">
+                  <Palette className="w-5 h-5" />
+                  Skills & Mediums
+                </h4>
+                <div className="space-y-2">
+                  {['Oil Painting', 'Digital Illustration', 'Pencil Drawing', 'Watercolor', 'Portrait Art', 'T-Shirt Design'].map((skill) => (
+                    <div key={skill} className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-gold-600 rounded-full"></div>
+                      <span className="text-foreground font-medium text-sm">{skill}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 shadow-md border border-gold-50">
+                <h4 className="text-xl font-playfair font-semibold text-gold-600 mb-4 flex items-center gap-2">
+                  <Brush className="w-5 h-5" />
+                  Tools I Use
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {['Procreate', 'Photoshop', 'Canvas', 'Wacom', 'Oil & Acrylic'].map((tool) => (
+                    <span key={tool} className="px-3 py-1 bg-cream-100 text-foreground rounded-full text-xs font-medium">
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
 
-            <h3 className="text-2xl font-playfair font-semibold text-gold-600 mb-4">Tools I Use</h3>
-            <div className="flex flex-wrap gap-3 mb-8">
-              {['Procreate', 'Adobe Photoshop', 'Traditional Canvas', 'Wacom Tablet', 'Oil & Acrylic'].map((tool) => (
-                <span key={tool} className="px-4 py-2 bg-cream-100 text-foreground rounded-full text-sm font-medium">
-                  {tool}
-                </span>
-              ))}
-            </div>
-
-            <a href="#contact">
-              <Button size="lg" className="bg-gold-600 hover:bg-gold-700">
-                Let's Work Together
-              </Button>
-            </a>
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <a href="#contact">
+                <Button size="lg" className="bg-gradient-to-r from-gold-600 to-gold-700 hover:from-gold-700 hover:to-gold-800 text-white px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                  Let's Create Something Beautiful Together
+                </Button>
+              </a>
+            </motion.div>
           </motion.div>
         </div>
+
+        {/* Artwork Showcase - Bottom */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          viewport={{ once: true }}
+          className="mt-20"
+        >
+          <div className="relative group">
+            <div className="absolute -inset-8 bg-gradient-to-r from-gold-200/20 to-transparent rounded-3xl"></div>
+            <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-gold-100">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                <div className="lg:col-span-1">
+                  <h3 className="text-2xl font-playfair font-bold text-gold-700 mb-4">My Creative Space</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Every masterpiece begins in a space filled with inspiration. This is where magic happens, 
+                    where ideas transform into tangible art that speaks to the soul.
+                  </p>
+                </div>
+                <div className="lg:col-span-2">
+                  <img
+                    src="https://images.unsplash.com/photo-1692859532235-c93fa73bd5d0"
+                    alt="Artist workspace with paintings and creative tools"
+                    className="rounded-2xl shadow-2xl w-full h-64 object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
