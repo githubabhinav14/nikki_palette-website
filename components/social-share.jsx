@@ -40,7 +40,7 @@ export function ShareButtons({
   };
 
   const shareOnWhatsApp = () => {
-    const shareUrl = `https://wa.me/?text=${encodeURIComponent(description + ' ' + url)}`;
+    const shareUrl = `https://wa.me/917673926708?text=${encodeURIComponent(description + ' ' + url)}`;
     window.open(shareUrl, '_blank');
   };
 

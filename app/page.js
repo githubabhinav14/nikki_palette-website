@@ -1242,8 +1242,8 @@ function ContactSection() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-lg mb-1">Phone</h3>
-                    <a href="tel:+1234567890" className="text-gold-600 hover:text-gold-700">
-                      7673926708
+                    <a href="tel:+917673926708" className="text-gold-600 hover:text-gold-700">
+                      +91 76739 26708
                     </a>
                   </div>
                 </div>
@@ -1280,7 +1280,7 @@ function ContactSection() {
                   <div>
                     <h3 className="font-semibold text-lg mb-1">WhatsApp</h3>
                     <a 
-                      href="https://wa.me/1234567890" 
+                      href="https://wa.me/917673926708" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-gold-600 hover:text-gold-700"

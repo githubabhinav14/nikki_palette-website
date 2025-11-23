@@ -136,7 +136,7 @@ Content-Type: application/json
 {
   "name": "Client Name",
   "email": "client@example.com",
-  "phone": "+1234567890",
+  "phone": "+917673926708",
   "message": "Your message here"
 }
 ```
@@ -257,7 +257,7 @@ curl -X POST http://localhost:3000/api/contact \
 
 Update these in `/app/app/layout.js`:
 - Instagram: https://instagram.com/nikki_palette
-- WhatsApp: https://wa.me/1234567890
+- WhatsApp: https://wa.me/917673926708
 
 ## 🎨 Image Sources
 
